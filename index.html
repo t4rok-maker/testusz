@@ -1,53 +1,26 @@
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Державний Портал СШЖ v24.0.3 - Ultra Expanded Edition</title>
-    
-    <style>
-        /* ========================================================================================
-           I. ГЛОБАЛЬНІ НАЛАШТУВАННЯ ТА ДЕКЛАРАЦІЯ ЗМІННИХ (ROOT)
-           ========================================================================================
-           Цей блок містить фундаментальну колірну схему СШЖ, яка базується на темних 
-           космічних відтінках з додаванням золота та неонового блакитного.
-        */
-        :root {
-            --usz-main-bg: #020617;
-            --usz-card-bg: #0f172a;
-            --usz-card-border: rgba(255, 255, 255, 0.08);
-            --usz-accent-gold: #fbbf24;
-            --usz-accent-gold-rgb: 251, 191, 36;
-            --usz-accent-blue: #0ea5e9;
-            --usz-accent-blue-rgb: 14, 165, 233;
-            --usz-accent-purple: #a855f7;
-            --usz-accent-green: #22c55e;
-            --usz-accent-red: #ef4444;
-            --usz-accent-orange: #ff5722;
-            --usz-text-primary: #f8fafc;
-            --usz-text-secondary: #94a3b8;
-            --usz-font-main: 'Inter', system-ui, -apple-system, sans-serif;
-            --usz-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-            --usz-shadow-gold: 0 0 20px rgba(251, 191, 36, 0.2);
-            --usz-shadow-blue: 0 0 20px rgba(14, 165, 233, 0.2);
-            --usz-border-radius-xl: 32px;
-            --usz-border-radius-lg: 20px;
-            --usz-border-radius-md: 12px;
+20px;
         }
 
-        /* ========================================================================================
-           II. ПОВНЕ ОБНУЛЕННЯ ТА БАЗОВІ СТИЛІ (RESET SYSTEM)
-           ========================================================================================
-           Ми розписуємо кожен параметр окремо для максимальної прозорості та об'єму коду.
+        /* ========================================
+           CSS BLOCK 02: THEME: CYBERPUNK
+           ========================================
+        */
+        body.theme-cyber {
+            --usz-bg: #000000;
+            --usz-card: #0a0a0a;
+            --usz-border: #ff9800;
+            --usz-accent: #ff5722;
+            --usz-text: #ffffff;
+            --usz-text-dim: #a0a0a0;
+            --usz-shadow: rgba(255, 152, 0, 0.2);
+        }
+
+        /* ========================================
+           CSS BLOCK 03: RESET & GLOBAL STYLES (NO SHORTHANDS)
+           ========================================
         */
         * {
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html {
-            width: 100%;
-            height: 100%;
             margin-top: 0px;
             margin-bottom: 0px;
             margin-left: 0px;
@@ -56,1350 +29,1119 @@
             padding-bottom: 0px;
             padding-left: 0px;
             padding-right: 0px;
-            scroll-behavior: smooth;
+            outline-style: none;
         }
 
         body {
-            background-color: var(--usz-main-bg);
-            color: var(--usz-text-primary);
-            font-family: var(--usz-font-main);
-            font-size: 16px;
-            font-weight: 400;
-            line-height: 1.75;
+            background-color: var(--usz-bg);
+            color: var(--usz-text);
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            font-size: var(--usz-font-size);
+            line-height: 1.5;
             overflow-x: hidden;
-            width: 100%;
             min-height: 100vh;
-            margin: 0;
-            padding: 0;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            transition-property: background-color;
+            transition-duration: var(--transition-speed);
+            transition-timing-function: ease;
         }
 
-        /* ========================================================================================
-           III. КАСТОМІЗАЦІЯ СКРОЛБАРУ (SCROLLBAR ARCHITECTURE)
-           ========================================================================================
+        /* ========================================
+           CSS BLOCK 04: SPLASH SCREEN
+           ========================================
         */
-        ::-webkit-scrollbar {
-            width: 12px;
-            height: 12px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background-color: var(--usz-main-bg);
-            border-radius: 0px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background-color: var(--usz-accent-gold);
-            border-radius: 10px;
-            border-top-width: 3px;
-            border-top-style: solid;
-            border-top-color: var(--usz-main-bg);
-            border-bottom-width: 3px;
-            border-bottom-style: solid;
-            border-bottom-color: var(--usz-main-bg);
-            border-left-width: 3px;
-            border-left-style: solid;
-            border-left-color: var(--usz-main-bg);
-            border-right-width: 3px;
-            border-right-style: solid;
-            border-right-color: var(--usz-main-bg);
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background-color: #fcd34d;
-        }
-
-        /* ========================================================================================
-           IV. GATEWAY & AUTHORIZATION UI
-           ========================================================================================
-        */
-        #gateway-container {
+        #splash-screen {
             position: fixed;
             top: 0px;
+            bottom: 0px;
             left: 0px;
-            width: 100vw;
-            height: 100vh;
-            background-color: var(--usz-main-bg);
-            background-image: radial-gradient(
-                circle at center, 
-                #0f172a 0%, 
-                #020617 100%
-            );
-            z-index: 99999;
+            right: 0px;
+            width: 100%;
+            height: 100%;
+            background-color: #050a14;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
-            padding-top: 20px;
-            padding-bottom: 20px;
-            padding-left: 20px;
-            padding-right: 20px;
-            transition-property: opacity, visibility;
-            transition-duration: 0.8s;
-            transition-timing-function: ease-in-out;
+            z-index: 10000;
+            opacity: 1;
+            transition-property: opacity;
+            transition-duration: 0.6s;
         }
 
-        .spinner-mechanism {
-            width: 160px;
-            height: 160px;
-            border-top-width: 3px;
+        .loader-ring {
+            width: 120px;
+            height: 120px;
+            border-top-left-radius: 50%;
+            border-top-right-radius: 50%;
+            border-bottom-left-radius: 50%;
+            border-bottom-right-radius: 50%;
+            border-top-width: 5px;
+            border-bottom-width: 5px;
+            border-left-width: 5px;
+            border-right-width: 5px;
             border-top-style: solid;
-            border-top-color: var(--usz-accent-gold);
-            border-bottom-width: 3px;
             border-bottom-style: solid;
-            border-bottom-color: transparent;
-            border-left-width: 3px;
             border-left-style: solid;
-            border-left-color: transparent;
-            border-right-width: 3px;
             border-right-style: solid;
-            border-right-color: transparent;
-            border-radius: 50%;
-            animation-name: spin-master;
-            animation-duration: 2s;
-            animation-iteration-count: infinite;
-            animation-timing-function: linear;
-            margin-bottom: 50px;
-            position: relative;
-        }
-
-        .spinner-mechanism::after {
-            content: "";
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            right: 15px;
-            bottom: 15px;
-            border-top-width: 3px;
-            border-top-style: solid;
-            border-top-color: var(--usz-accent-blue);
-            border-bottom-width: 3px;
-            border-bottom-style: solid;
+            border-top-color: #0ea5e9;
             border-bottom-color: transparent;
-            border-left-width: 3px;
-            border-left-style: solid;
             border-left-color: transparent;
-            border-right-width: 3px;
-            border-right-style: solid;
-            border-right-color: transparent;
-            border-radius: 50%;
-            animation-name: spin-master;
+            border-right-color: var(--usz-orange);
+            animation-name: rotation-spin;
             animation-duration: 1s;
             animation-iteration-count: infinite;
             animation-timing-function: linear;
-            animation-direction: reverse;
+            margin-bottom: 40px;
         }
 
-        @keyframes spin-master {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+        @keyframes rotation-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
-        .gateway-title-text {
-            font-size: clamp(40px, 10vw, 90px);
+        .usz-logo-big {
+            font-size: 80px;
             font-weight: 900;
-            color: var(--usz-accent-gold);
+            color: var(--usz-gold);
             letter-spacing: 20px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            text-shadow: 0 0 30px rgba(251, 191, 36, 0.3);
+            margin-bottom: 30px;
+            text-align: center;
+            display: block;
         }
 
-        .enter-system-btn {
-            padding-top: 25px;
-            padding-bottom: 25px;
+        .auth-btn {
+            background-color: transparent;
+            color: var(--usz-gold);
+            border-top-width: 3px;
+            border-bottom-width: 3px;
+            border-left-width: 3px;
+            border-right-width: 3px;
+            border-top-style: solid;
+            border-bottom-style: solid;
+            border-left-style: solid;
+            border-right-style: solid;
+            border-top-color: var(--usz-gold);
+            border-bottom-color: var(--usz-gold);
+            border-left-color: var(--usz-gold);
+            border-right-color: var(--usz-gold);
+            padding-top: 20px;
+            padding-bottom: 20px;
             padding-left: 60px;
             padding-right: 60px;
-            background-color: transparent;
-            border-top-width: 2px;
-            border-top-style: solid;
-            border-top-color: var(--usz-accent-gold);
-            border-bottom-width: 2px;
-            border-bottom-style: solid;
-            border-bottom-color: var(--usz-accent-gold);
-            border-left-width: 2px;
-            border-left-style: solid;
-            border-left-color: var(--usz-accent-gold);
-            border-right-width: 2px;
-            border-right-style: solid;
-            border-right-color: var(--usz-accent-gold);
-            color: var(--usz-accent-gold);
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 3px;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
             cursor: pointer;
-            border-radius: 15px;
+            text-transform: uppercase;
             transition-property: all;
             transition-duration: 0.4s;
         }
 
-        .enter-system-btn:hover {
-            background-color: var(--usz-accent-gold);
-            color: var(--usz-main-bg);
-            box-shadow: 0px 0px 40px rgba(251, 191, 36, 0.4);
+        .auth-btn:hover {
+            background-color: var(--usz-gold);
+            color: #000000;
             transform: scale(1.05);
         }
 
-        /* ========================================================================================
-           V. MAIN APPLICATION INTERFACE (ROOT)
-           ========================================================================================
+        /* ========================================
+           CSS BLOCK 05: MAIN CONTENT LAYOUT
+           ========================================
         */
-        #application-root {
-            display: none;
-            opacity: 0;
-            width: 100%;
-            padding-top: 60px;
-            padding-bottom: 120px;
-            padding-left: 20px;
-            padding-right: 20px;
-            transition-property: opacity;
-            transition-duration: 1s;
+        .main-content {
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-top: 40px;
+            padding-bottom: 180px;
+            padding-left: 25px;
+            padding-right: 25px;
         }
 
-        .main-header {
+        .portal-header {
             text-align: center;
-            margin-bottom: 80px;
-            width: 100%;
+            margin-top: 0px;
+            margin-bottom: 60px;
         }
 
-        .main-header h1 {
-            font-size: clamp(30px, 9vw, 85px);
-            font-weight: 900;
-            letter-spacing: 8px;
-            line-height: 1.1;
-            margin-top: 0px;
-            margin-bottom: 20px;
+        .portal-header h1 {
+            font-size: 70px;
+            font-weight: 950;
+            letter-spacing: -2px;
+            line-height: 0.9;
+            margin-bottom: 25px;
             text-transform: uppercase;
         }
 
-        .main-header .badge {
-            display: inline-block;
-            padding-top: 8px;
-            padding-bottom: 8px;
-            padding-left: 20px;
-            padding-right: 20px;
-            background-color: var(--usz-accent-gold);
-            color: var(--usz-main-bg);
-            font-weight: 900;
-            border-radius: 5px;
-            font-size: 12px;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-        }
-
-        .lang-selector {
-            margin-top: 0px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            width: 100%;
-        }
-
-        .lang-btn {
-            background-color: transparent;
-            border-top-width: 1px;
-            border-top-style: solid;
-            border-top-color: var(--usz-accent-gold);
-            border-bottom-width: 1px;
-            border-bottom-style: solid;
-            border-bottom-color: var(--usz-accent-gold);
-            border-left-width: 1px;
-            border-left-style: solid;
-            border-left-color: var(--usz-accent-gold);
-            border-right-width: 1px;
-            border-right-style: solid;
-            border-right-color: var(--usz-accent-gold);
-            color: var(--usz-accent-gold);
-            padding-top: 8px;
-            padding-bottom: 8px;
-            padding-left: 18px;
-            padding-right: 18px;
-            font-family: var(--usz-font-mono);
-            font-weight: 900;
-            cursor: pointer;
-            transition-duration: 0.3s;
-            border-radius: 4px;
-        }
-
-        .lang-btn:hover {
-            background-color: var(--usz-accent-gold);
-            color: var(--usz-main-bg);
-            box-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
-        }
-
-        /* ========================================================================================
-           VI. GRID SYSTEM ARCHITECTURE (USZ GRID)
-           ========================================================================================
-        */
         .usz-grid {
             display: grid;
-            grid-template-columns: repeat(1, 1fr);
-            gap: 24px;
-            max-width: 1700px;
-            margin-left: auto;
-            margin-right: auto;
-            width: 100%;
+            grid-template-columns: repeat(12, 1fr);
+            column-gap: 25px;
+            row-gap: 25px;
         }
 
-        @media (min-width: 1024px) {
-            .usz-grid {
-                grid-template-columns: repeat(12, 1fr);
-            }
-        }
-
-        /* ========================================================================================
-           VII. MODULE COMPONENT STYLES
-           ========================================================================================
-        */
-        .usz-module {
-            background-color: var(--usz-card-bg);
-            border-top-width: 1px;
+        .usz-card {
+            background-color: var(--usz-card);
+            border-top-width: 2px;
+            border-bottom-width: 2px;
+            border-left-width: 2px;
+            border-right-width: 2px;
             border-top-style: solid;
-            border-top-color: var(--usz-card-border);
-            border-bottom-width: 1px;
             border-bottom-style: solid;
-            border-bottom-color: var(--usz-card-border);
-            border-left-width: 1px;
             border-left-style: solid;
-            border-left-color: var(--usz-card-border);
-            border-right-width: 1px;
             border-right-style: solid;
-            border-right-color: var(--usz-card-border);
-            border-radius: var(--usz-border-radius-lg);
-            padding-top: 35px;
-            padding-bottom: 35px;
-            padding-left: 35px;
-            padding-right: 35px;
-            transition-property: all;
+            border-top-color: var(--usz-border);
+            border-bottom-color: var(--usz-border);
+            border-left-color: var(--usz-border);
+            border-right-color: var(--usz-border);
+            border-top-left-radius: var(--border-radius-xl);
+            border-top-right-radius: var(--border-radius-xl);
+            border-bottom-left-radius: var(--border-radius-xl);
+            border-bottom-right-radius: var(--border-radius-xl);
+            padding-top: 30px;
+            padding-bottom: 30px;
+            padding-left: 30px;
+            padding-right: 30px;
+            box-shadow: 0px 15px 30px var(--usz-shadow);
+            transition-property: transform, box-shadow;
             transition-duration: 0.3s;
             position: relative;
-            overflow: hidden;
-            grid-column: span 1;
         }
 
-        @media (min-width: 1024px) {
-            .w-3 { grid-column: span 3; }
-            .w-4 { grid-column: span 4; }
-            .w-5 { grid-column: span 5; }
-            .w-6 { grid-column: span 6; }
-            .w-7 { grid-column: span 7; }
-            .w-8 { grid-column: span 8; }
-            .w-9 { grid-column: span 9; }
-            .w-12 { grid-column: span 12; }
+        .usz-card:hover {
+            transform: translateY(-8px);
         }
 
-        .usz-module:hover {
-            border-top-color: var(--usz-accent-gold);
-            border-bottom-color: var(--usz-accent-gold);
-            border-left-color: var(--usz-accent-gold);
-            border-right-color: var(--usz-accent-gold);
-            transform: translateY(-5px);
-            background-color: #1e293b;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
+        /* ========================================
+           CSS BLOCK 06: GRID UTILITIES
+           ========================================
+        */
+        .span-12 { grid-column: span 12; }
+        .span-6 { grid-column: span 6; }
+        .span-3 { grid-column: span 3; }
 
-        .module-label {
+        .label {
             font-size: 13px;
             font-weight: 900;
-            color: var(--usz-accent-gold);
+            color: var(--usz-accent);
             text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom-width: 1px;
-            border-bottom-style: solid;
-            border-bottom-color: rgba(255, 255, 255, 0.1);
-            padding-bottom: 15px;
-        }
-
-        /* ========================================================================================
-           VIII. DATA TABLE & LIST INTERFACE
-           ========================================================================================
-        */
-        .table-container {
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            border-radius: 12px;
-            background-color: rgba(0, 0, 0, 0.2);
-        }
-
-        .usz-data-table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 800px;
-        }
-
-        .usz-data-table th {
-            text-align: left;
-            padding-top: 20px;
-            padding-bottom: 20px;
-            padding-left: 20px;
-            padding-right: 20px;
-            color: var(--usz-text-secondary);
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            background-color: rgba(255, 255, 255, 0.02);
-        }
-
-        .usz-data-table td {
-            padding-top: 22px;
-            padding-bottom: 22px;
-            padding-left: 20px;
-            padding-right: 20px;
-            border-bottom-width: 1px;
-            border-bottom-style: solid;
-            border-bottom-color: rgba(255, 255, 255, 0.05);
-            font-size: 14px;
-            color: var(--usz-text-primary);
-        }
-
-        .usz-data-table tr:hover {
-            background-color: rgba(255, 255, 255, 0.03);
-        }
-
-        .list-entry {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 20px;
-            padding-bottom: 20px;
-            border-bottom-width: 1px;
-            border-bottom-style: solid;
-            border-bottom-color: rgba(255, 255, 255, 0.05);
-            transition: padding 0.3s;
-        }
-
-        .list-entry:hover {
-            padding-left: 5px;
-        }
-
-        .list-entry:last-child {
-            border-bottom: none;
-        }
-
-        .value-highlight {
-            color: var(--usz-accent-gold);
-            font-family: var(--usz-font-mono);
-            font-weight: 700;
-            text-shadow: 0 0 10px rgba(251, 191, 36, 0.2);
-        }
-
-        /* ========================================================================================
-           IX. TERMINAL & LOGGING STYLES
-           ========================================================================================
-        */
-        #terminal-output {
-            height: 280px;
-            overflow-y: auto;
-            font-family: var(--usz-font-mono);
-            font-size: 11px;
-            color: var(--usz-accent-green);
-            background-color: rgba(0, 0, 0, 0.5);
-            padding-top: 20px;
-            padding-bottom: 20px;
-            padding-left: 20px;
-            padding-right: 20px;
-            border-radius: 15px;
-            line-height: 2;
-            border-left-width: 3px;
-            border-left-style: solid;
-            border-left-color: var(--usz-accent-green);
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
-        }
-
-        /* ========================================================================================
-           X. FOOTER HUB & NAVIGATION
-           ========================================================================================
-        */
-        .footer-hub {
-            margin-top: 120px;
-            padding-top: 80px;
-            border-top-width: 5px;
-            border-top-style: solid;
-            border-top-color: var(--usz-accent-gold);
-            text-align: center;
-            width: 100%;
-        }
-
-        .nav-btn-container {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 50px;
-            width: 100%;
-        }
-
-        @media (min-width: 768px) {
-            .nav-btn-container {
-                flex-direction: row;
-            }
-        }
-
-        .nav-link-btn {
-            flex: 1;
-            padding-top: 35px;
-            padding-bottom: 35px;
-            border-radius: 25px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            cursor: pointer;
-            border: none;
-            transition-property: all;
-            transition-duration: 0.3s;
-            font-size: 16px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .nav-link-btn:hover {
-            transform: translateY(-5px) scale(1.02);
-            filter: brightness(1.1);
-        }
-
-        .btn-gold { 
-            background-color: var(--usz-accent-gold); 
-            color: var(--usz-main-bg); 
-        }
-        
-        .btn-blue { 
-            background-color: var(--usz-accent-blue); 
-            color: #ffffff; 
-        }
-        
-        .btn-orange { 
-            background-color: var(--usz-accent-orange); 
-            color: #ffffff; 
-        }
-
-        /* ========================================================================================
-           XI. SUB-PAGES SYSTEM (STAFF, LAWS, SPORT)
-           ========================================================================================
-        */
-        .sub-page-interface {
-            display: none;
-            width: 100%;
-            padding-top: 80px;
-            padding-bottom: 120px;
-            padding-left: 20px;
-            padding-right: 20px;
-            animation-name: page-slide-in;
-            animation-duration: 0.7s;
-            animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        @keyframes page-slide-in {
-            from { 
-                opacity: 0; 
-                transform: translateY(40px); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0px); 
-            }
-        }
-
-        .law-card-box {
-            background-color: var(--usz-card-bg);
-            padding-top: 45px;
-            padding-bottom: 45px;
-            padding-left: 45px;
-            padding-right: 45px;
-            border-radius: 24px;
-            margin-bottom: 30px;
-            border-left-width: 12px;
-            border-left-style: solid;
-            border-left-color: var(--usz-accent-gold);
-            transition: transform 0.3s;
-        }
-
-        .law-card-box:hover {
-            transform: scale(1.01);
-        }
-
-        .law-card-box h3 {
-            color: var(--usz-accent-gold);
+            letter-spacing: 4px;
             margin-bottom: 15px;
-            font-size: 24px;
-            font-weight: 800;
-            text-transform: uppercase;
+            display: block;
         }
 
-        .law-card-box p {
-            font-size: 16px;
-            line-height: 1.8;
-            color: var(--usz-text-secondary);
-        }
-
-        .external-button-link {
-            display: inline-block;
-            margin-top: 35px;
-            padding-top: 22px;
-            padding-bottom: 22px;
-            padding-left: 50px;
-            padding-right: 50px;
-            background-color: var(--usz-accent-orange);
-            color: #ffffff;
+        .big-data {
+            font-size: 32px;
             font-weight: 900;
-            text-decoration: none;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+        }
+
+        .entry-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            border-bottom-color: rgba(128, 128, 128, 0.1);
+        }
+
+        /* ========================================
+           CSS BLOCK 07: FIXED NAVIGATION DOCK
+           ========================================
+        */
+        .fixed-dock {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--usz-card);
+            border-top-width: 3px;
+            border-bottom-width: 3px;
+            border-left-width: 3px;
+            border-right-width: 3px;
+            border-top-style: solid;
+            border-bottom-style: solid;
+            border-left-style: solid;
+            border-right-style: solid;
+            border-top-color: var(--usz-border);
+            border-bottom-color: var(--usz-border);
+            border-left-color: var(--usz-border);
+            border-right-color: var(--usz-border);
+            padding-top: 15px;
+            padding-bottom: 15px;
+            padding-left: 40px;
+            padding-right: 40px;
+            border-top-left-radius: 100px;
+            border-top-right-radius: 100px;
+            border-bottom-left-radius: 100px;
+            border-bottom-right-radius: 100px;
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+            z-index: 1000;
+            box-shadow: 0px 20px 50px rgba(0,0,0,0.6);
+        }
+
+        .dock-item {
+            background-color: transparent;
+            border-top-style: none;
+            border-bottom-style: none;
+            border-left-style: none;
+            border-right-style: none;
+            color: var(--usz-text);
+            font-weight: 900;
             text-transform: uppercase;
-            border-radius: 18px;
             font-size: 14px;
+            cursor: pointer;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 20px;
+            padding-right: 20px;
+            border-top-left-radius: 40px;
+            border-top-right-radius: 40px;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
             transition-property: all;
-            transition-duration: 0.3s;
-            text-align: center;
-        }
-        
-        .external-button-link:hover {
-            opacity: 0.95;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(255, 87, 34, 0.3);
+            transition-duration: 0.2s;
         }
 
-        .staff-avatar-placeholder {
-            font-size: 90px;
-            margin-bottom: 30px;
-            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.1));
+        .dock-item:hover {
+            background-color: var(--usz-accent);
+            color: #ffffff;
         }
 
-        .back-btn-container {
-            margin-top: 80px;
-            width: 100%;
+        /* ========================================
+           CSS BLOCK 08: SETTINGS & MODALS
+           ========================================
+        */
+        .settings-trigger {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--usz-accent);
+            color: #ffffff;
+            border-top-style: none;
+            border-bottom-style: none;
+            border-left-style: none;
+            border-right-style: none;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            cursor: pointer;
+            font-size: 30px;
+            z-index: 5000;
             display: flex;
             justify-content: center;
+            align-items: center;
+            box-shadow: 0px 10px 25px rgba(0,0,0,0.3);
         }
 
-        /* ========================================================================================
-           XII. ADDITIONAL MOBILE OPTIMIZATIONS
-           ========================================================================================
+        .overlay {
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.95);
+            backdrop-filter: blur(20px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .modal-body {
+            background-color: var(--usz-bg);
+            border-top-width: 8px;
+            border-bottom-width: 8px;
+            border-left-width: 8px;
+            border-right-width: 8px;
+            border-top-style: solid;
+            border-bottom-style: solid;
+            border-left-style: solid;
+            border-right-style: solid;
+            border-top-color: var(--usz-accent);
+            border-bottom-color: var(--usz-accent);
+            border-left-color: var(--usz-accent);
+            border-right-color: var(--usz-accent);
+            padding-top: 40px;
+            padding-bottom: 40px;
+            padding-left: 40px;
+            padding-right: 40px;
+            border-top-left-radius: 40px;
+            border-top-right-radius: 40px;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+            width: 1000px;
+            max-width: 95%;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        /* ========================================
+           CSS BLOCK 09: LINKS & BUTTONS
+           ========================================
         */
-        @media (max-width: 600px) {
-            .usz-module {
-                padding: 25px;
-            }
-            .main-header h1 {
-                font-size: 32px;
-                letter-spacing: 4px;
-            }
-            .gateway-title-text {
-                letter-spacing: 10px;
-            }
+        .link-btn {
+            display: inline-block;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 5px;
+            margin-right: 5px;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            padding-left: 25px;
+            padding-right: 25px;
+            background-color: var(--usz-accent);
+            color: #ffffff;
+            text-decoration-line: none;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            font-weight: 900;
+            font-size: 14px;
+            transition-property: all;
+            transition-duration: 0.2s;
+        }
+
+        .exit-btn-full {
+            width: 100%;
+            margin-top: 40px;
+            background-color: var(--usz-accent);
+            color: #ffffff;
+            border-top-style: none;
+            border-bottom-style: none;
+            border-left-style: none;
+            border-right-style: none;
+            padding-top: 25px;
+            padding-bottom: 25px;
+            font-size: 20px;
+            font-weight: 900;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            cursor: pointer;
+            text-transform: uppercase;
         }
     </style>
 </head>
-<body>
+<body id="core-body">
 
-    <div id="gateway-container">
-        <div class="spinner-mechanism"></div>
-        <div class="gateway-title-text">СШЖ</div>
-        <div style="color: var(--usz-accent-blue); font-family: var(--usz-font-mono); letter-spacing: 6px; margin-bottom: 40px; font-weight: 700; text-transform: uppercase;">
-            STATION ENCRYPTION V24.0.3 ACTIVE
-        </div>
-        <button class="enter-system-btn" onclick="activateInterface()" id="btn-authorize">Авторизувати доступ</button>
-        <p style="margin-top: 30px; color: var(--usz-text-secondary); font-size: 10px; font-family: var(--usz-font-mono); opacity: 0.5;">
-            SECURE HANDSHAKE: IN PROGRESS...
-        </p>
+    <div id="splash-screen">
+        <div class="loader-ring"></div>
+        <div class="usz-logo-big" id="splash-logo">С Ш Ж</div>
+        <button class="auth-btn" id="btn-auth" onclick="igniteSystem()">Авторизувати доступ</button>
     </div>
 
-    <div id="application-root">
+    <div id="main-app" style="display: none; opacity: 0;">
         
-        <header class="main-header">
-            <div class="badge">United States of Zhytomyr</div>
-            <h1 id="main-title">ГОЛОВНИЙ ТЕРМІНАЛ<br>ДЕРЖАВНОГО УПРАВЛІННЯ</h1>
-            
-            <div class="lang-selector">
-                <button class="lang-btn" onclick="setLang('ua')">UA</button>
-                <button class="lang-btn" onclick="setLang('en')">EN</button>
-            </div>
-        </header>
+        <button class="settings-trigger" id="ui-gear-btn" onclick="modalIn('modal-opt')">⚙️</button>
 
-        <div class="usz-grid">
+        <div class="main-content">
             
-            <div class="usz-module w-3">
-                <div class="module-label">
-                    <span id="txt-global-metrics">📊 Глобальні Метрики</span>
-                </div>
-                <div class="list-entry">
-                    <span id="txt-population">Населення</span> 
-                    <span class="value-highlight" id="live-pop-val">1,429,435</span>
-                </div>
-                <div class="list-entry">
-                    <span id="txt-rate">Курс Ж.грн</span> 
-                    <span class="value-highlight" id="live-rate-val">539.61 ₴</span>
-                </div>
-                <div class="list-entry">
-                    <span id="txt-vibe">Вайб-Індекс</span> 
-                    <span class="value-highlight" style="color: var(--usz-accent-purple);">99.2%</span>
-                </div>
-                <div class="list-entry">
-                    <span id="txt-cyber">Кібер-Захист</span> 
-                    <span class="value-highlight" style="color: var(--usz-accent-green);">ONLINE</span>
-                </div>
-                <div class="list-entry">
-                    <span id="txt-happiness">Рівень щастя</span> 
-                    <span class="value-highlight">99.8%</span>
-                </div>
-                <div class="list-entry">
-                    <span>Node Status</span> 
-                    <span class="value-highlight">ACTIVE</span>
-                </div>
-                <div class="list-entry">
-                    <span>System Uptime</span> 
-                    <span class="value-highlight" id="uptime-val">142h</span>
-                </div>
-            </div>
+            <header class="portal-header">
+                <h1 id="txt-title">UNITED STATES<br>OF ZHYTOMYR</h1>
+                <p id="txt-subtitle" style="font-weight: 900; letter-spacing: 8px; color: var(--usz-text-dim);">
+                    ДЕРЖАВНА ІНФОРМАЦІЙНА СИСТЕМА v38.0
+                </p>
+            </header>
 
-            <div class="usz-module w-6">
-                <div class="module-label">
-                    <span id="txt-treasury">🏛 Центральна Скарбниця СШЖ</span>
+            <div class="usz-grid">
+                <div class="usz-card span-3">
+                    <span class="label" id="lbl-pop">Населення СШЖ</span>
+                    <div class="big-data" id="val-pop-c">1,429,439</div>
                 </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 35px;">
-                    <div>
-                        <div class="list-entry">
-                            <span id="txt-gold-fund">Золотий Фонд</span> 
-                            <span class="value-highlight">45,230 т</span>
-                        </div>
-                        <div class="list-entry">
-                            <span>Bitcoin Reserve</span> 
-                            <span class="value-highlight">1.28M</span>
-                        </div>
-                        <div class="list-entry">
-                            <span>Ethereum Reserve</span> 
-                            <span class="value-highlight">15.4M</span>
-                        </div>
-                        <div class="list-entry">
-                            <span>Solana Nodes</span> 
-                            <span class="value-highlight">42,000</span>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="list-entry">
-                            <span id="txt-inflation">Річна Інфляція</span> 
-                            <span class="value-highlight" style="color: var(--usz-accent-green);">-3.1%</span>
-                        </div>
-                        <div class="list-entry">
-                            <span id="txt-gdp">Ріст ВВП (AI)</span> 
-                            <span class="value-highlight" style="color: var(--usz-accent-green);">+240.5%</span>
-                        </div>
-                        <div class="list-entry">
-                            <span id="txt-debt">Зовнішній Борг</span> 
-                            <span class="value-highlight">0.00</span>
-                        </div>
-                        <div class="list-entry">
-                            <span id="txt-credit">Кредитний Рейтинг</span> 
-                            <span class="value-highlight">AAA+</span>
-                        </div>
+                <div class="usz-card span-3">
+                    <span class="label" id="lbl-rate">Курс Житомирської Грн.</span>
+                    <div class="big-data"><span id="val-rate-c">539.61</span> <span id="cur-sym" style="color:var(--usz-accent);">₴</span></div>
+                </div>
+                <div class="usz-card span-3">
+                    <span class="label" id="lbl-vibe">Вайб-Індекс</span>
+                    <div class="big-data" id="val-vibe-c">99.2%</div>
+                </div>
+                <div class="usz-card span-3">
+                    <span class="label" id="lbl-cyber">Кібер-Захист</span>
+                    <div class="big-data" style="color: #22c55e;" id="txt-active">АКТИВНИЙ</div>
+                </div>
+
+                <div class="usz-card span-12">
+                    <span class="label" id="lbl-budget">Річний Бюджет Країни</span>
+                    <div class="big-data" style="color: var(--usz-accent); font-size: 60px;">
+                        <span id="bud-sym">₴</span> <span id="val-budget-c">1,240,500,000,000</span>
                     </div>
                 </div>
-                <div id="txt-treasury-note" style="margin-top: 35px; padding: 30px; background-color: rgba(0, 0, 0, 0.4); border-radius: 20px; font-size: 13px; color: var(--usz-text-secondary); border-left: 6px solid var(--usz-accent-gold); line-height: 1.8;">
-                    ДЕРЖАВНА ПРИМІТКА: Емісія Житомирської гривні (Ж.грн) здійснюється виключно через алгоритми Proof-of-Vibe, що працюють на базі обчислювальних потужностей сектору Крошня. Кожна транзакція валідується особистим ключем Міністра Програмування. Будь-яка спроба фальсифікації призведе до негайної депортації в хмару.
-                </div>
-            </div>
 
-            <div class="usz-module w-3">
-                <div class="module-label">
-                    <span id="txt-monitoring">🛡 Моніторинг Ядра</span>
-                </div>
-                <div id="terminal-output">
-                    > Initializing system...<br>
-                    > Encryption: AES-4096<br>
-                    > Database: Connected<br>
-                    > Mobile Scaling: Enabled<br>
-                    > CSS Verbosity: ULTRA<br>
-                    > T4rok Admin: Logged in<br>
-                    > Vibe sensor: Active<br>
-                </div>
-            </div>
-
-            <div class="usz-module w-12">
-                <div class="module-label">
-                    <span id="txt-army-registry">⚔️ Офіційний реєстр збройних сил СШЖ (Армійський корпус)</span>
-                </div>
-                <div class="table-container">
-                    <table class="usz-data-table">
-                        <thead>
-                            <tr id="txt-army-table-head">
-                                <th>Назва підрозділу</th>
-                                <th>Кількість юнітів</th>
-                                <th>Технологічний стек</th>
-                                <th>Сектор дислокації</th>
-                                <th>Статус готовності</th>
-                            </tr>
-                        </thead>
-                        <tbody id="army-table-body">
-                            <tr>
-                                <td>12 БрСП "Азов"</td>
-                                <td>400,000 одиниць</td>
-                                <td>Лазери L-99 "Житомир-1"</td>
-                                <td>Північний вузол</td>
-                                <td><span class="value-highlight">100% (READY)</span></td>
-                            </tr>
-                            <tr>
-                                <td>3 ОШБр</td>
-                                <td>понад 300,000 бійців</td>
-                                <td>танки "СШЖ-21М"</td>
-                                <td>Західний фронтир</td>
-                                <td><span class="value-highlight">100% (READY)</span></td>
-                            </tr>
-                            <tr>
-                                <td>63 ОШБр "Сталеві леви"</td>
-                                <td>12,200 бійців</td>
-                                <td>Нейро-стелс камуфляж</td>
-                                <td>Центральний штаб</td>
-                                <td><span class="value-highlight">100% (READY)</span></td>
-                            </tr>
-                            <tr>
-                                <td>Космічний флот Корольова</td>
-                                <td>145 крейсерів</td>
-                                <td>Квантові торпеди Ж-1</td>
-                                <td>Навкoлоземна орбіта</td>
-                                <td><span class="value-highlight">100% (READY)</span></td>
-                            </tr>
-                            <tr>
-                                <td>13 ОШБр ім.Д.Комарова</td>
-                                <td>45000 елітних бійців</td>
-                                <td>ЕМГ-гвинтівки "Депо"</td>
-                                <td>Мобільні групи</td>
-                                <td><span class="value-highlight">100% (READY)</span></td>
-                            </tr>
-                            <tr>
-                                <td>86 ОАБр ім. Д.Галицького</td>
-                                <td>240,000 одиниць</td>
-                                <td>Ультразвукові хвилі</td>
-                                <td>Річка Тетерів</td>
-                                <td><span class="value-highlight">100% (READY)</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="usz-module w-4">
-                <div class="module-label">
-                    <span id="txt-tax-directives">📜 Податкові Директиви</span>
-                </div>
-                <div class="list-entry">
-                    <span id="txt-tax-ai">AI-Прибуток</span> 
-                    <span class="value-highlight">2.0%</span>
-                </div>
-                <div class="list-entry">
-                    <span id="txt-tax-kro">Розбудова Крошні</span> 
-                    <span class="value-highlight">0.5%</span>
-                </div>
-                <div class="list-entry">
-                    <span id="txt-tax-space">Космічна Програма</span> 
-                    <span class="value-highlight">1.2%</span>
-                </div>
-                <div class="list-entry">
-                    <span id="txt-tax-vibe">Вайб Михайлівської</span> 
-                    <span class="value-highlight" style="color: var(--usz-accent-green);">0.0%</span>
-                </div>
-            </div>
-
-            <div class="usz-module w-4">
-                <div class="module-label">
-                    <span id="txt-vacancies">💼 Вакансії Міністерства</span>
-                </div>
-                <div class="list-entry">
-                    <span>Senior AI Architect</span> 
-                    <span class="value-highlight">630 Ж.грн</span>
-                </div>
-                <div class="list-entry">
-                    <span>OnlyFans</span> 
-                    <span class="value-highlight">605 Ж.грн</span>
-                </div>
-                <div class="list-entry">
-                    <span>Vibe Designer</span> 
-                    <span class="value-highlight">515 Ж.грн</span>
-                </div>
-                <div class="list-entry">
-                    <span>GeoGuesser Pro Hunter</span> 
-                    <span class="value-highlight">475 Ж.грн</span>
-                </div>
-            </div>
-
-            <div class="usz-module w-4">
-                <div class="module-label">
-                    <span id="txt-objects">🏢 Реєстр Об'єктів</span>
-                </div>
-                <div class="list-entry">
-                    <span>Kroshnya Cloud Hub</span> 
-                    <span style="color: var(--usz-accent-green); font-weight: 800;">ONLINE</span>
-                </div>
-                <div class="list-entry">
-                    <span>Bogunia Cyber Tower</span> 
-                    <span style="color: var(--usz-accent-green); font-weight: 800;">SECURE</span>
-                </div>
-                <div class="list-entry">
-                    <span>Mihailivska VR Plaza</span> 
-                    <span style="color: var(--usz-accent-blue); font-weight: 800;">OPEN</span>
-                </div>
-                <div class="list-entry">
-                    <span>Hydro Energy Unit</span> 
-                    <span style="color: var(--usz-accent-green); font-weight: 800;">ACTIVE</span>
-                </div>
-            </div>
-
-        </div>
-
-        <footer class="footer-hub">
-            <div style="padding-bottom: 20px;">
-                <h2 id="txt-subsystems" style="font-size: 36px; color: var(--usz-accent-gold); font-weight: 900; text-transform: uppercase; letter-spacing: 6px;">СУБ-СИСТЕМИ СШЖ</h2>
-                <p id="txt-footer-desc" style="color: var(--usz-text-secondary); margin-top: 15px; font-size: 15px; letter-spacing: 2px; max-width: 800px; margin-left: auto; margin-right: auto;">
-                    Розширений доступ до державних ресурсів, зашифрованих баз даних та соціальних платформ вищого керівництва.
-                </p>
-            </div>
-            
-            <div class="nav-btn-container">
-                <button id="btn-staff-nav" class="nav-link-btn btn-gold" onclick="switchPage('staff')">Керівництво Уряду</button>
-                <button id="btn-laws-nav" class="nav-link-btn btn-blue" onclick="switchPage('laws')">Конституція СШЖ</button>
-                <button id="btn-sport-nav" class="nav-link-btn btn-orange" onclick="switchPage('sport')">Спортивний Хаб</button>
-            </div>
-        </footer>
-    </div>
-
-    <div id="sub-page-staff" class="sub-page-interface">
-        <h1 id="txt-staff-title" style="text-align: center; color: var(--usz-accent-gold); font-size: 55px; margin-bottom: 80px; font-weight: 900; text-transform: uppercase; letter-spacing: 12px; text-shadow: 0 0 30px rgba(251, 191, 36, 0.4);">КЕРІВНИЦТВО ДЕРЖАВИ</h1>
-        
-        <div class="usz-grid">
-            
-            <div class="usz-module w-4" style="text-align: center;">
-                <div class="staff-avatar-placeholder">👑</div>
-                <h2 style="font-size: 38px; margin-bottom: 12px; font-weight: 900;">Потапік</h2>
-                <div id="txt-pos-pres" style="color: var(--usz-accent-gold); font-weight: 900; letter-spacing: 4px; margin-bottom: 25px; font-size: 14px; text-transform: uppercase;">ПРЕЗИДЕНТ СШЖ</div>
-                <p id="txt-desc-pres" style="color: var(--usz-text-secondary); font-size: 15px; margin-bottom: 35px; line-height: 1.8;">
-                    Лідер нації, головний гарант конституції та джерело національного натхнення. Контролює вайб усіх секторів держави та визначає стратегічний курс розвитку.
-                </p>
-                <a href="https://www.tiktok.com/@potapik_cole_ninjago" target="_blank" class="external-button-link" style="background-color: #000; border: 1px solid #fff; width: 100%; display: block;">
-                    Відвідати TikTok Президента
-                </a>
-            </div>
-
-            <div class="usz-module w-4" style="text-align: center; border-color: var(--usz-accent-blue);">
-                <div class="staff-avatar-placeholder">⚡</div>
-                <h2 style="font-size: 38px; margin-bottom: 12px; font-weight: 900;">T4rok</h2>
-                <div id="txt-pos-t4rok" style="color: var(--usz-accent-blue); font-weight: 900; letter-spacing: 4px; margin-bottom: 25px; font-size: 14px; text-transform: uppercase;">МІНІСТР ПРОГРАМУВАННЯ</div>
-                <p id="txt-desc-t4rok" style="color: var(--usz-text-secondary); font-size: 15px; margin-bottom: 35px; line-height: 1.8;">
-                    Головний архітектор цифрового простору СШЖ. Відповідає за безпеку хмарних серверів, розробку штучного інтелекту, стабільність блокчейну та цей портал.
-                </p>
-                <a href="https://www.tiktok.com/@t4rok_official" target="_blank" class="external-button-link" style="background-color: #000; border: 1px solid #fff; width: 100%; display: block;">
-                    Відвідати TikTok Міністра
-                </a>
-            </div>
-
-            <div class="usz-module w-4" style="text-align: center;">
-                <div class="staff-avatar-placeholder">🗺</div>
-                <h2 style="font-size: 38px; margin-bottom: 12px; font-weight: 900;">Рекс</h2>
-                <div id="txt-pos-rex" style="color: var(--usz-accent-gold); font-weight: 900; letter-spacing: 4px; margin-bottom: 25px; font-size: 14px; text-transform: uppercase;">ДЕКАН ФАКУЛЬТЕТУ GeoGuesser</div>
-                <p id="txt-desc-rex" style="color: var(--usz-text-secondary); font-size: 15px; margin-bottom: 35px; line-height: 1.8;">
-                    Голова стратегічних сил GeoGuessr. Відповідає за глобальне позиціонування, розвідку територій та картографічну перевагу СШЖ у світі.
-                </p>
-                <a href="https://www.tiktok.com/@reksxxx" target="_blank" class="external-button-link" style="background-color: #000; border: 1px solid #fff; width: 100%; display: block;">
-                    Відвідати TikTok Декана
-                </a>
-            </div>
-
-        </div>
-        
-        <div style="margin-top: 80px; text-align: center; width: 100%;">
-            <div style="background-color: var(--usz-card-bg); padding: 50px; border-radius: 30px; border: 1px solid rgba(14, 165, 233, 0.3); max-width: 900px; margin: 0 auto;">
-                <h2 style="color: var(--usz-accent-blue); font-size: 32px; margin-bottom: 20px; font-weight: 900; text-transform: uppercase;">Цифровий Вузол Зв'язку</h2>
-                <p style="color: var(--usz-text-secondary); margin-bottom: 40px; font-size: 16px;">
-                    Офіційне джерело державних новин, указів Президента та оперативних зведень Генштабу СШЖ. Підключення через зашифрований протокол Telegram.
-                </p>
-                <a href="https://t.me/+lRfbhN44KPEzMjIy" target="_blank" class="nav-link-btn btn-blue" style="width: 100%; padding: 35px;">
-                    ПРИЄДНАТИСЬ ДО TELEGRAM КАНАЛУ
-                </a>
-                <p style="margin-top: 25px; color: var(--usz-text-secondary); font-size: 11px; font-family: var(--usz-font-mono); letter-spacing: 2px;">
-                    LINK ID: +lRfbhN44KPEzMjIy | SECURITY: LEVEL 5
-                </p>
-            </div>
-        </div>
-        
-        <div class="back-btn-container">
-            <button class="enter-system-btn btn-back" onclick="switchPage('main')" style="width: 100%; max-width: 600px; border-color: var(--usz-accent-gold); color: var(--usz-accent-gold);">
-                Повернутись в Термінал
-            </button>
-        </div>
-    </div>
-
-    <div id="sub-page-laws" class="sub-page-interface">
-        <h1 id="txt-laws-title" style="text-align: center; color: var(--usz-accent-gold); font-size: 55px; margin-bottom: 80px; font-weight: 900; text-transform: uppercase; letter-spacing: 12px;">КОНСТИТУЦІЯ ДЕРЖАВИ</h1>
-        <div class="usz-grid">
-            <div class="w-12">
-                <div class="law-card-box">
-                    <h3 id="txt-law-1-title">Стаття 1.1 - Цифровий Суверенітет</h3>
-                    <p id="txt-law-1-desc">Кожен громадянин СШЖ має невід'ємне право на доступ до мережі інтернет на швидкості не менше 100 Гбіт/с. Будь-яке обмеження трафіку прирівнюється до державної зради та карається вічним баном у реальності.</p>
-                </div>
-                <div class="law-card-box">
-                    <h3 id="txt-law-2-title">Стаття 1.2 - Державна Валюта</h3>
-                    <p id="txt-law-2-desc">Єдиним законним платіжним засобом на всій території СШЖ є Житомирська Гривня (Ж.грн). Її цінність підкріплена сумарним обчислювальним інтелектом нації та золотим запасом у підвалах Крошні.</p>
-                </div>
-                <div class="law-card-box">
-                    <h3 id="txt-law-5-title">Стаття 1.5 - Трамвайна Гідність</h3>
-                    <p id="txt-law-5-desc">Трамвайний маршрут №7 є священним енергетичним каналом СШЖ. Кожен трамвай на лінії є суверенною територією, де діють закони підвищеного комфорту та безкоштовного Wi-Fi 7-го покоління.</p>
-                </div>
-                <div class="law-card-box">
-                    <h3>Стаття 2.1 - Право на Вайб</h3>
-                    <p>Кожен мешканець має право на перебування у стані високого вайбу. Держава зобов'язується забезпечувати якісний контент та аудіовізуальну підтримку на Михайлівській 24/7.</p>
-                </div>
-            </div>
-        </div>
-        <div class="back-btn-container">
-            <button class="enter-system-btn btn-back" onclick="switchPage('main')" style="width: 100%; max-width: 600px;">Повернутись в Термінал</button>
-        </div>
-    </div>
-
-    <div id="sub-page-sport" class="sub-page-interface">
-        <h1 id="txt-sport-title" style="text-align: center; color: var(--usz-accent-orange); font-size: 55px; margin-bottom: 80px; font-weight: 900; text-transform: uppercase; letter-spacing: 10px;">СПОРТИВНИЙ ДЕПАРТАМЕНТ</h1>
-        <div class="usz-grid">
-            <div class="usz-module w-12" style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); padding: 60px; border: 2px solid var(--usz-accent-orange);">
-                <h2 style="font-size: 42px; margin-bottom: 25px; color: #ffffff; font-weight: 900;">🏎 Formula 1 - State Broadcast</h2>
-                <p style="font-size: 18px; color: var(--usz-text-secondary); margin-bottom: 45px; max-width: 900px; line-height: 1.8;">
-                    Отримуйте доступ до найшвидшої аналітики у світі автоспорту. СШЖ офіційно підтримує розвиток високих швидкостей, аеродинамічних технологій та кібер-перегонів. Слідкуйте за результатами гран-прі в прямому ефірі.
-                </p>
-                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                    <a href="https://t.me/f1ua_f1" target="_blank" class="external-button-link" style="padding-left: 60px; padding-right: 60px;">
-                        Відкрити Канал F1UA
-                    </a>
-                    <div style="padding: 20px; background: rgba(0,0,0,0.3); border-radius: 15px; display: flex; align-items: center; gap: 15px;">
-                        <span style="color: var(--usz-accent-green);">●</span>
-                        <span style="font-family: var(--usz-font-mono); font-size: 14px;">LIVE BROADCAST: ACTIVE</span>
+                <div class="usz-card span-6">
+                    <span class="label" id="lbl-vac">💼 Вакансії Міністерства</span>
+                    <div class="entry-row">
+                        <span id="v12">Крипто-Лобіст СШЖ</span> 
+                        <span class="big-data" style="font-size:20px;"><span class="v-cur">₴</span> 1200</span>
+                    </div>
+                    <div class="entry-row">
+                        <span id="v8">Архітектор Глобального Гріда</span> 
+                        <span class="big-data" style="font-size:20px;"><span class="v-cur">₴</span> 1100</span>
+                    </div>
+                    <div class="entry-row">
+                        <span id="v1">Пілот F1 (GetaCard Racing)</span> 
+                        <span class="big-data" style="font-size:20px;"><span class="v-cur">₴</span> 1000</span>
+                    </div>
+                    <div class="entry-row">
+                        <span id="v2">Міністр Програмування</span> 
+                        <span class="big-data" style="font-size:20px;"><span class="v-cur">₴</span> 980</span>
+                    </div>
+                    <div class="entry-row">
+                        <span id="v10">Штурман Раллійних Заїздів</span> 
+                        <span class="big-data" style="font-size:20px;"><span class="v-cur">₴</span> 950</span>
+                    </div>
+                    <div class="entry-row">
+                        <span id="v3">Офіцер Сил Геогессерра</span> 
+                        <span class="big-data" style="font-size:20px;"><span class="v-cur">₴</span> 920</span>
+                    </div>
+                    <div class="entry-row">
+                        <span id="v7">Оператор Ударних Дронів</span> 
+                        <span class="big-data" style="font-size:20px;"><span class="v-cur">₴</span> 900</span>
+                    </div>
+                    <div class="entry-row">
+                        <span id="v11">Голова Департаменту Гіроскопів</span> 
+                        <span class="big-data" style="font-size:20px;"><span class="v-cur">₴</span> 880</span>
+                    </div>
+                    <div class="entry-row">
+                        <span id="v4">Senior Cyber-Security Engineer</span> 
+                        <span class="big-data" style="font-size:20px;"><span class="v-cur">₴</span> 850</span>
+                    </div>
+                    <div class="entry-row">
+                        <span id="v6">Детектив Цифрових Слідів</span> 
+                        <span class="big-data" style="font-size:20px;"><span class="v-cur">₴</span> 750</span>
+                    </div>
+                    <div class="entry-row">
+                        <span id="v5">Аналітик Трафіку Мережі</span> 
+                        <span class="big-data" style="font-size:20px;"><span class="v-cur">₴</span> 700</span>
+                    </div>
+                    <div class="entry-row">
+                        <span id="v9">Модератор Національного Вайбу</span> 
+                        <span class="big-data" style="font-size:20px;"><span class="v-cur">₴</span> 600</span>
                     </div>
                 </div>
+
+                <div class="usz-card span-6">
+                    <span class="label" id="lbl-edu">🏫 Державні Академії</span>
+                    <div class="entry-row" id="e1">Національний Університет Кібербезпеки</div>
+                    <div class="entry-row" id="e2">Державна Академія Автоспорту СШЖ</div>
+                    <div class="entry-row" id="e3">Житомирський Технологічний Хаб</div>
+                    <div class="entry-row" id="e4">Інститут Геопросторової Розвідки</div>
+                    <div class="entry-row" id="e5">Коледж Квантових Обчислень</div>
+                    <div class="entry-row" id="e6">Центр Високих Технологій та ШІ</div>
+                    <div class="entry-row" id="e7">Школа Цифрового Права та Етики</div>
+                    <div class="entry-row" id="e8">Лабораторія Нейронних Мереж</div>
+                    <div class="entry-row" id="e9">Академія Космічного Зв'язку</div>
+                    <div class="entry-row" id="e10">Факультет Прикладної Криптографії</div>
+                    <div class="entry-row" id="e11">Вища Школа Стрімінгу та Медіа</div>
+                    <div class="entry-row" id="e12">Технікум Ремонту Гіперкарів</div>
+                </div>
             </div>
         </div>
-        <div class="back-btn-container">
-            <button class="enter-system-btn btn-back" onclick="switchPage('main')" style="width: 100%; max-width: 600px; border-color: var(--usz-accent-orange); color: var(--usz-accent-orange);">
-                Повернутись в Термінал
-            </button>
+
+        <nav class="fixed-dock">
+            <button class="dock-item" onclick="modalIn('modal-lead')" id="nav-lead">Керівництво</button>
+            <button class="dock-item" onclick="modalIn('modal-laws')" id="nav-laws">Закони</button>
+            <button class="dock-item" onclick="modalIn('modal-sport')" id="nav-sport">Спорт</button>
+        </nav>
+    </div>
+
+    <div id="modal-opt" class="overlay" onclick="modalOut('modal-opt')">
+        <div class="modal-body" style="text-align: center;" onclick="event.stopPropagation()">
+            <h2 id="st-h" style="font-size: 32px; margin-bottom: 30px;">Налаштування</h2>
+            <div class="setting-group" style="margin-bottom: 30px;">
+                <p id="st-scale" style="font-weight: 900; margin-bottom: 15px;">МАСШТАБ ТЕКСТУ</p>
+                <input type="range" min="12" max="24" value="16" style="width: 100%;" oninput="rescale(this.value)">
+            </div>
+            <div class="setting-group" style="margin-bottom: 30px;">
+                <p id="st-theme" style="font-weight: 900; margin-bottom: 15px;">ВІЗУАЛЬНА ТЕМА</p>
+                <select onchange="retheme(this.value)" style="width: 100%; padding: 20px; border-radius: 15px; background: #111; color: #ffffff; border: 2px solid #333;">
+                    <option value="light" id="th-light">Класична Світла</option>
+                    <option value="cyber" id="th-cyber" selected>Кібер-Панк (Orange)</option>
+                </select>
+            </div>
+            <div class="setting-group" style="margin-bottom: 30px;">
+                <p id="st-lang" style="font-weight: 900; margin-bottom: 15px;">МОВА СИСТЕМИ</p>
+                <select id="lang-select" onchange="translateUI(this.value)" style="width: 100%; padding: 20px; border-radius: 15px; background: #111; color: #ffffff; border: 2px solid #333;">
+                    <option value="ua" id="opt-ua">Українська 🇺🇦</option>
+                    <option value="en" id="opt-en">English 🇺🇸</option>
+                    <option value="de" id="opt-de">Deutsch 🇩🇪</option>
+                    <option value="es" id="opt-es">Español 🇪🇸</option>
+                    <option value="pig" id="opt-pig">русский 🤢</option>
+                </select>
+            </div>
+            <button class="exit-btn-full" id="st-close" onclick="modalOut('modal-opt')">ЗБЕРЕГТИ</button>
+        </div>
+    </div>
+
+    <div id="modal-lead" class="overlay" onclick="modalOut('modal-lead')">
+        <div class="modal-body" onclick="event.stopPropagation()">
+            <h2 id="ld-h" style="text-align: center; font-size: 36px; margin-bottom: 30px;">Керівництво</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                <div class="usz-card" style="text-align: center;">
+                    <p id="ln1" style="font-weight: 950; font-size: 24px; color: var(--usz-gold);">ПОТАПІК</p>
+                    <p id="lr1">Верховний Лідер СШЖ</p>
+                    <div style="margin-top: 20px;"><a href="https://www.tiktok.com/@potapik_cole_ninjago" target="_blank" class="link-btn" id="tk1">TikTok</a></div>
+                </div>
+                <div class="usz-card" style="text-align: center;">
+                    <p id="ln2" style="font-weight: 950; font-size: 24px; color: var(--usz-gold);">G_REKS</p>
+                    <p id="lr2">Головнокомандувач Геогессерра</p>
+                    <div style="margin-top: 20px;">
+                        <a href="https://www.tiktok.com/@reksxxx" target="_blank" class="link-btn" id="tk2">TikTok</a>
+                        <a href="https://t.me/G_reks" target="_blank" class="link-btn" id="tg2" style="background-color: #0088cc;">Telegram</a>
+                    </div>
+                </div>
+                <div class="usz-card" style="text-align: center;">
+                    <p id="ln3" style="font-weight: 950; font-size: 24px; color: var(--usz-gold);">T4ROK</p>
+                    <p id="lr3">Міністр Економіки</p>
+                    <div style="margin-top: 20px;"><a href="https://www.tiktok.com/@t4rok_official" target="_blank" class="link-btn" id="tk3">TikTok</a></div>
+                </div>
+            </div>
+            <button class="exit-btn-full" id="ld-close" onclick="modalOut('modal-lead')">ПОВЕРНУТИСЬ</button>
+        </div>
+    </div>
+
+    <div id="modal-laws" class="overlay" onclick="modalOut('modal-laws')">
+        <div class="modal-body" onclick="event.stopPropagation()">
+            <h2 id="laws-h" style="text-align: center; font-size: 36px; margin-bottom: 30px;">Конституція СШЖ</h2>
+            <div id="law-content" style="display: flex; flex-direction: column; gap: 15px;">
+                <div class="usz-card" style="padding: 20px; border-left: 10px solid var(--usz-orange);">
+                    <strong id="lt-a1">Стаття 1:</strong> <span id="lt1">СШЖ є незалежним цифровим об'єднанням.</span>
+                </div>
+                <div class="usz-card" style="padding: 20px; border-left: 10px solid var(--usz-orange);">
+                    <strong id="lt-a2">Стаття 2:</strong> <span id="lt2">Якісний інтернет — це базове право кожного громадянина.</span>
+                </div>
+                <div class="usz-card" style="padding: 20px; border-left: 10px solid var(--usz-orange);">
+                    <strong id="lt-a3">Стаття 3:</strong> <span id="lt3">Заборонено будь-який контент агресора на території федерації.</span>
+                </div>
+                <div class="usz-card" style="padding: 20px; border-left: 10px solid var(--usz-orange);">
+                    <strong id="lt-a4">Стаття 4:</strong> <span id="lt4">Відкритий код — це найвища форма свободи.</span>
+                </div>
+                <div class="usz-card" style="padding: 20px; border-left: 10px solid var(--usz-orange);">
+                    <strong id="lt-a5">Стаття 5:</strong> <span id="lt5">Повага до Гіроскопа громадянина є обов'язковою.</span>
+                </div>
+                <div class="usz-card" style="padding: 20px; border-left: 10px solid var(--usz-orange);">
+                    <strong id="lt-a6">Стаття 6:</strong> <span id="lt6">Заборонено стискати, оптимізувати або скорочувати державний код без згоди.</span>
+                </div>
+                <div class="usz-card" style="padding: 20px; border-left: 10px solid var(--usz-orange);">
+                    <strong id="lt-a7">Стаття 7:</strong> <span id="lt7">Рівний доступ до знань у всіх державних академіях.</span>
+                </div>
+            </div>
+            <button class="exit-btn-full" id="laws-close" onclick="modalOut('modal-laws')">ПРИЙНЯТО</button>
+        </div>
+    </div>
+
+    <div id="modal-sport" class="overlay" onclick="modalOut('modal-sport')">
+        <div class="modal-body" onclick="event.stopPropagation()">
+            <h2 id="sport-h" style="text-align: center; font-size: 36px; margin-bottom: 30px;">Спортивні Події</h2>
+            <div id="sport-content" style="display: grid; grid-template-columns: 1fr; gap: 20px;">
+                <div class="usz-card">
+                    <h3 id="sp-e1">Подія 1:</h3>
+                    <p id="sd1" style="font-size: 24px; color: var(--usz-accent);">Раллі Чернівці — 15 Жовтня 2026</p>
+                </div>
+                <div class="usz-card">
+                    <h3 id="sp-e2">Подія 2:</h3>
+                    <p id="sd2" style="font-size: 24px; color: var(--usz-accent);">Гран-прі Варшави — 22 Серпня 2026</p>
+                </div>
+                <div class="usz-card">
+                    <h3 id="sp-e3">Подія 3:</h3>
+                    <p id="sd3" style="font-size: 24px; color: var(--usz-accent);">Geoguessr World Cup — 10 Листопада 2026</p>
+                </div>
+            </div>
+            <button class="exit-btn-full" id="sport-close" onclick="modalOut('modal-sport')">ЗАКРИТИ</button>
         </div>
     </div>
 
     <script>
         /**
-         * GLOBAL STATE ENGINE
-         */
-        const state_data = {
-            pop: 1429435,
-            rate: 539.61,
-            uptime: 142,
-            is_active: false
-        };
-
-        /**
-         * MULTI-LANGUAGE DICTIONARY (EXTENDED)
+         * GLOBAL TRANSLATION REPOSITORY
+         * Contains full mapping for 5 languages: UA, EN, DE, ES, PIG.
          */
         const translations = {
             ua: {
-                mainTitle: "ГОЛОВНИЙ ТЕРМІНАЛ<br>ДЕРЖАВНОГО УПРАВЛІННЯ",
-                authorize: "Авторизувати доступ",
-                global: "📊 Глобальні Метрики",
-                pop: "Населення",
-                rate: "Курс Ж.грн",
-                treasury: "🏛 Центральна Скарбниця СШЖ",
-                note: "ДЕРЖАВНА ПРИМІТКА: Емісія Житомирської гривні (Ж.грн) здійснюється виключно через алгоритми Proof-of-Vibe, що працюють на базі обчислювальних потужностей сектору Крошня. Кожна транзакція валідується особистим ключем Міністра Програмування. Будь-яка спроба фальсифікації призведе до негайної депортації в хмару.",
-                monitoring: "🛡 Моніторинг Ядра",
-                armyReg: "⚔️ Офіційний реєстр збройних сил СШЖ (Армійський корпус)",
-                armyHead: "<th>Назва підрозділу</th><th>Кількість юнітів</th><th>Технологічний стек</th><th>Сектор дислокації</th><th>Статус готовності</th>",
-                taxDir: "📜 Податкові Директиви",
+                title: "UNITED STATES OF ZHYTOMYR",
+                sub: "ДЕРЖАВНА ІНФОРМАЦІЙНА СИСТЕМА v38.0",
+                pop: "Населення СШЖ",
+                rate: "Курс Житомирської Грн.",
+                budget: "Річний Бюджет Країни",
+                vibe: "Вайб-Індекс",
+                cyber: "Кібер-Захист",
+                active: "АКТИВНИЙ",
                 vac: "💼 Вакансії Міністерства",
-                obj: "🏢 Реєстр Об'єктів",
-                sub: "СУБ-СИСТЕМИ СШЖ",
-                footDesc: "Розширений доступ до державних ресурсів, зашифрованих баз даних та соціальних платформ вищого керівництва.",
-                btnStaff: "Керівництво Уряду",
-                btnLaws: "Конституція СШЖ",
-                btnSport: "Спортивний Хаб",
-                btnBack: "Повернутись в Термінал",
-                staffTitle: "КЕРІВНИЦТВО ДЕРЖАВИ",
-                posPres: "ПРЕЗИДЕНТ СШЖ",
-                posT4rok: "МІНІСТР ПРОГРАМУВАННЯ",
-                posRex: "ДЕКАН ФАКУЛЬТЕТУ GeoGuesser",
-                descPres: "Лідер нації, головний гарант конституції та джерело національного натхнення. Контролює вайб усіх секторів держави та визначає стратегічний курс розвитку.",
-                descT4rok: "Головний архітектор цифрового простору СШЖ. Відповідає за безпеку хмарних серверів, розробку штучного інтелекту, стабільність блокчейну та цей портал.",
-                descRex: "Голова стратегічних сил GeoGuessr. Відповідає за глобальне позиціонування, розвідку територій та картографічну перевагу СШЖ у світі.",
-                lawsTitle: "КОНСТИТУЦІЯ ДЕРЖАВИ",
-                sportTitle: "СПОРТИВНИЙ ДЕПАРТАМЕНТ",
-                law1Title: "Стаття 1.1 - Цифровий Суверенітет",
-                law1Desc: "Кожен громадянин СШЖ має невід'ємне право на доступ до мережі інтернет на швидкості не менше 100 Гбіт/с. Будь-яке обмеження трафіку прирівнюється до державної зради та карається вічним баном у реальності.",
-                law2Title: "Стаття 1.2 - Державна Валюта",
-                law2Desc: "Єдиним законним платіжним засобом на всій території СШЖ є Житомирська Гривня (Ж.грн). Її цінність підкріплена сумарним обчислювальним інтелектом нації та золотим запасом у підвалах Крошні.",
-                law5Title: "Стаття 1.5 - Трамвайна Гідність",
-                law5Desc: "Трамвайний маршрут №7 є священним енергетичним каналом СШЖ. Кожен трамвай на лінії є суверенною територією, де діють закони підвищеного комфорту та безкоштовного Wi-Fi 7-го покоління."
+                edu: "🏫 Державні Академії",
+                lead: "Керівництво",
+                laws: "Закони",
+                sport: "Спорт",
+                close: "ЗАКРИТИ",
+                auth: "Авторизувати доступ",
+                st_h: "Налаштування",
+                st_scale: "МАСШТАБ ТЕКСТУ",
+                st_theme: "ВІЗУАЛЬНА ТЕМА",
+                st_lang: "МОВА СИСТЕМИ",
+                th_light: "Класична Світла",
+                th_cyber: "Кібер-Панк (Orange)",
+                ln1: "ПОТАПІК",
+                ln2: "G_REKS",
+                ln3: "T4ROK",
+                lr1: "Верховний Лідер СШЖ",
+                lr2: "Головнокомандувач Геогессерра",
+                lr3: "Міністр Економіки",
+                tk: "TikTok",
+                tg: "Telegram",
+                art: "Стаття",
+                event: "Подія",
+                currency: "₴",
+                v1: "Пілот F1 (GetaCard Racing)",
+                v2: "Міністр Програмування",
+                v3: "Офіцер Сил Геогессерра",
+                v4: "Senior Cyber-Security Engineer",
+                v5: "Аналітик Трафіку Мережі",
+                v6: "Детектив Цифрових Слідів",
+                v7: "Оператор Ударних Дронів",
+                v8: "Архітектор Глобального Гріда",
+                v9: "Модератор Національного Вайбу",
+                v10: "Штурман Раллійних Заїздів",
+                v11: "Голова Департаменту Гіроскопів",
+                v12: "Крипто-Лобіст СШЖ",
+                e1: "Національний Університет Кібербезпеки",
+                e2: "Державна Академія Автоспорту СШЖ",
+                e3: "Житомирський Технологічний Хаб",
+                e4: "Інститут Геопросторової Розвідки",
+                e5: "Коледж Квантових Обчислень",
+                e6: "Центр Високих Технологій та ШІ",
+                e7: "Школа Цифрового Права та Етики",
+                e8: "Лабораторія Нейронних Мереж",
+                e9: "Академія Космічного Зв'язку",
+                e10: "Факультет Прикладної Криптографії",
+                e11: "Вища Школа Стрімінгу та Медіа",
+                e12: "Технікум Ремонту Гіперкарів",
+                lt1: "СШЖ є незалежним цифровим об'єднанням.",
+                lt2: "Якісний інтернет — це базове право.",
+                lt3: "Заборонено контент агресора.",
+                lt4: "Відкритий код — це свобода.",
+                lt5: "Повага до Гіроскопа громадянина.",
+                lt6: "Заборонено стискати державний код.",
+                lt7: "Рівний доступ до знань.",
+                sd1: "Раллі Чернівці — 15 Жовтня 2026",
+                sd2: "Гран-прі Варшави — 22 Серпня 2026",
+                sd3: "Geoguessr World Cup — 10 Листопада 2026",
+                o_ua: "Українська 🇺🇦",
+                o_en: "English 🇺🇸",
+                o_de: "Deutsch 🇩🇪",
+                o_es: "Español 🇪🇸",
+                o_pig: "русский 🤢"
             },
             en: {
-                mainTitle: "CENTRAL TERMINAL<br>OF STATE ADMINISTRATION",
-                authorize: "Authorize Access",
-                global: "📊 Global Metrics",
-                pop: "Population",
-                rate: "Zh.UAH Rate",
-                treasury: "🏛 USZ Central Treasury",
-                note: "STATE NOTE: Issuance of Zhytomyr Hryvnia (Zh.UAH) is carried out via Proof-of-Vibe algorithms based on Kroshnya sector computing power. Every transaction is validated by the Minister of Coding's private key.",
-                monitoring: "🛡 Core Monitoring",
-                armyReg: "⚔️ Official USZ Armed Forces Registry (Army Corps)",
-                armyHead: "<th>Unit Name</th><th>Unit Count</th><th>Tech Stack</th><th>Deployment Sector</th><th>Readiness Status</th>",
-                taxDir: "📜 Tax Directives",
+                title: "UNITED STATES OF ZHYTOMYR",
+                sub: "STATE INFORMATION SYSTEM v38.0",
+                pop: "USZ Population",
+                rate: "Zhytomyr Rate",
+                budget: "Annual State Budget",
+                vibe: "Vibe Index",
+                cyber: "Cyber Protection",
+                active: "ACTIVE",
                 vac: "💼 Ministry Vacancies",
-                obj: "🏢 Object Registry",
-                sub: "USZ SUB-SYSTEMS",
-                footDesc: "Extended access to state resources, encrypted databases, and top leadership social platforms.",
-                btnStaff: "Government Leadership",
-                btnLaws: "USZ Constitution",
-                btnSport: "Sports Hub",
-                btnBack: "Back to Terminal",
-                staffTitle: "GOVERNMENT LEADERSHIP",
-                posPres: "PRESIDENT OF USZ",
-                posT4rok: "MINISTER OF CODING",
-                posRex: "DEAN OF GeoGuesser Faculty",
-                descPres: "Leader of the nation, guarantor of the constitution, and source of national inspiration. Controls the vibe of all state sectors.",
-                descT4rok: "Chief architect of the USZ digital space. Responsible for cloud security, AI development, and blockchain stability.",
-                descRex: "Head of GeoGuessr strategic forces. Responsible for global positioning, reconnaissance, and cartographic dominance.",
-                lawsTitle: "STATE CONSTITUTION",
-                sportTitle: "SPORTS DEPARTMENT",
-                law1Title: "Article 1.1 - Digital Sovereignty",
-                law1Desc: "Every citizen of USZ has an inalienable right to internet access at speeds of at least 100 Gbps. Any traffic restriction is treason.",
-                law2Title: "Article 1.2 - State Currency",
-                law2Desc: "The only legal tender in USZ is the Zhytomyr Hryvnia (Zh.UAH), backed by the nation's total computing intelligence.",
-                law5Title: "Article 1.5 - Tram Dignity",
-                law5Desc: "Tram route No. 7 is the sacred energy channel of USZ. Every tram on the line is a sovereign territory with high comfort laws."
+                edu: "🏫 State Academies",
+                lead: "Leadership",
+                laws: "Constitution",
+                sport: "Sports",
+                close: "CLOSE",
+                auth: "Authorize Access",
+                st_h: "Settings",
+                st_scale: "TEXT SCALE",
+                st_theme: "VISUAL THEME",
+                st_lang: "SYSTEM LANGUAGE",
+                th_light: "Classic Light",
+                th_cyber: "Cyber-Punk (Orange)",
+                ln1: "POTAPIK",
+                ln2: "G_REKS",
+                ln3: "T4ROK",
+                lr1: "Supreme Leader of USZ",
+                lr2: "Geoguessr Commander",
+                lr3: "Economy Minister",
+                tk: "TikTok",
+                tg: "Telegram",
+                art: "Article",
+                event: "Event",
+                currency: "$",
+                v1: "F1 Pilot (GetaCard Racing)",
+                v2: "Programming Minister",
+                v3: "Geoguessr Force Officer",
+                v4: "Senior Cyber Engineer",
+                v5: "Traffic Analyst",
+                v6: "Trace Detective",
+                v7: "Drone Operator",
+                v8: "Grid Architect",
+                v9: "Vibe Moderator",
+                v10: "Rally Navigator",
+                v11: "Head of Gyros",
+                v12: "Crypto Lobbyist",
+                e1: "Cyber Security University",
+                e2: "Motorsport Academy",
+                e3: "Technology Hub",
+                e4: "Intelligence Inst",
+                e5: "Quantum College",
+                e6: "AI Center",
+                e7: "Digital Law School",
+                e8: "Neural Lab",
+                e9: "Space Comm Academy",
+                e10: "Cryptography Faculty",
+                e11: "Streaming School",
+                e12: "Hypercar Tech",
+                lt1: "USZ is an independent digital union.",
+                lt2: "Quality internet is a basic right.",
+                lt3: "Aggressor content is banned.",
+                lt4: "Open source is freedom.",
+                lt5: "Respect for citizen's Gyroscope.",
+                lt6: "No state code compression.",
+                lt7: "Equal access to knowledge.",
+                sd1: "Chernivtsi Rally — Oct 15, 2026",
+                sd2: "Warsaw GP — Aug 22, 2026",
+                sd3: "Geoguessr World Cup — Nov 10, 2026",
+                o_ua: "Ukrainian 🇺🇦",
+                o_en: "English 🇺🇸",
+                o_de: "German 🇩🇪",
+                o_es: "Spanish 🇪🇸",
+                o_pig: "russian 🤢"
+            },
+            de: {
+                title: "VEREINIGTE STAATEN VON ZHYTOMYR",
+                sub: "STAATSINFORMATIONSSYSTEM v38.0",
+                pop: "Bevölkerung",
+                rate: "Kurs",
+                budget: "Jahresbudget",
+                vibe: "Vibe-Index",
+                cyber: "Cyber-Schutz",
+                active: "AKTIV",
+                vac: "💼 Ministerium Stellen",
+                edu: "🏫 Staatsakademien",
+                lead: "Führung",
+                laws: "Gesetze",
+                sport: "Sport",
+                close: "SCHLIESSEN",
+                auth: "Zugang autorisieren",
+                st_h: "Einstellungen",
+                st_scale: "TEXTGRÖSSE",
+                st_theme: "THEMA",
+                st_lang: "SPRACHE",
+                th_light: "Klassisch Hell",
+                th_cyber: "Cyber-Punk (Orange)",
+                ln1: "POTAPIK",
+                ln2: "G_REKS",
+                ln3: "T4ROK",
+                lr1: "Oberster Führer",
+                lr2: "Geoguessr Kommandant",
+                lr3: "Wirtschaftsminister",
+                tk: "TikTok",
+                tg: "Telegram",
+                art: "Artikel",
+                event: "Ereignis",
+                currency: "€",
+                v1: "F1 Pilot",
+                v2: "Programmierminister",
+                v3: "Geoguessr Offizier",
+                v4: "Cyber-Ingenieur",
+                v5: "Verkehrsanalytiker",
+                v6: "Spurendetektiv",
+                v7: "Drohnenoperator",
+                v8: "Grid-Architekt",
+                v9: "Vibe-Moderator",
+                v10: "Rallye-Navigator",
+                v11: "Gyro-Leiter",
+                v12: "Krypto-Lobbyist",
+                e1: "Cyber-Sicherheits-Uni",
+                e2: "Motorsport-Akademie",
+                e3: "Technologie-Hub",
+                e4: "Geheimdienstinst",
+                e5: "Quanten-Kolleg",
+                e6: "KI-Zentrum",
+                e7: "Rechtsschule",
+                e8: "Neurallabor",
+                e9: "Raumfahrtakademie",
+                e10: "Krypto-Fakultät",
+                e11: "Streamingschule",
+                e12: "Hypercar-Technik",
+                lt1: "USZ ist eine digitale Union.",
+                lt2: "Internet ist ein Grundrecht.",
+                lt3: "Aggressor-Inhalte verboten.",
+                lt4: "Open Source ist Freiheit.",
+                lt5: "Respekt für Gyroskope.",
+                lt6: "Keine Code-Komprimierung.",
+                lt7: "Gleicher Zugang zu Wissen.",
+                sd1: "Rallye Chernivtsi — 15. Okt 2026",
+                sd2: "Warschau GP — 22. Aug 2026",
+                sd3: "Geoguessr World Cup — 10. Nov 2026",
+                o_ua: "Ukrainisch 🇺🇦",
+                o_en: "Englisch 🇺🇸",
+                o_de: "Deutsch 🇩🇪",
+                o_es: "Spanisch 🇪🇸",
+                o_pig: "russisch 🤢"
+            },
+            es: {
+                title: "ESTADOS UNIDOS DE ZHYTOMYR",
+                sub: "SISTEMA DE INFORMACIÓN v38.0",
+                pop: "Población",
+                rate: "Tasa",
+                budget: "Presupuesto",
+                vibe: "Índice Vibe",
+                cyber: "Protección",
+                active: "ACTIVO",
+                vac: "💼 Vacantes",
+                edu: "🏫 Academias",
+                lead: "Liderazgo",
+                laws: "Constitución",
+                sport: "Deportes",
+                close: "CERRAR",
+                auth: "Autorizar",
+                st_h: "Ajustes",
+                st_scale: "ESCALA",
+                st_theme: "TEMA",
+                st_lang: "IDIOMA",
+                th_light: "Claro",
+                th_cyber: "Cyber-Punk",
+                ln1: "POTAPIK",
+                ln2: "G_REKS",
+                ln3: "T4ROK",
+                lr1: "Líder Supremo",
+                lr2: "Comandante Geoguessr",
+                lr3: "Ministro de Economía",
+                tk: "TikTok",
+                tg: "Telegram",
+                art: "Artículo",
+                event: "Evento",
+                currency: "€",
+                v1: "Piloto F1",
+                v2: "Ministro de Programación",
+                v3: "Oficial Geoguessr",
+                v4: "Ingeniero Ciber",
+                v5: "Analista de Tráfico",
+                v6: "Detective Digital",
+                v7: "Operador de Drones",
+                v8: "Arquitecto Grid",
+                v9: "Moderador Vibe",
+                v10: "Navegante de Rally",
+                v11: "Jefe de Giroscopios",
+                v12: "Lobbyist Cripto",
+                e1: "Universidad Ciber",
+                e2: "Academia Motor",
+                e3: "Hub Tech",
+                e4: "Inteligencia Inst",
+                e5: "Colegio Cuántico",
+                e6: "Centro IA",
+                e7: "Derecho Digital",
+                e8: "Lab Neural",
+                e9: "Academia Espacial",
+                e10: "Facultad Cripto",
+                e11: "Escuela de Medios",
+                e12: "Taller Hypercar",
+                lt1: "USZ es una unión digital.",
+                lt2: "Internet es un derecho.",
+                lt3: "Contenido agresor prohibido.",
+                lt4: "Código abierto es libertad.",
+                lt5: "Respeto al Giroscopio.",
+                lt6: "Sin compresión de código.",
+                lt7: "Acceso igualitario.",
+                sd1: "Rally Chernivtsi — 15 Oct 2026",
+                sd2: "GP Varsovia — 22 Ago 2026",
+                sd3: "Copa Geoguessr — 10 Nov 2026",
+                o_ua: "Ucraniano 🇺🇦",
+                o_en: "Inglés 🇺🇸",
+                o_de: "Alemán 🇩🇪",
+                o_es: "Español 🇪🇸",
+                o_pig: "ruso 🤢"
             }
         };
 
         /**
-         * UI CONTROLLER: LANGUAGE SWITCH
+         * FUNCTION: translateUI
+         * Verbose implementation of language switching logic.
          */
-        function setLang(lang) {
-            const t = translations[lang];
-            
-            // Header & Global
-            document.getElementById('main-title').innerHTML = t.mainTitle;
-            document.getElementById('btn-authorize').innerText = t.authorize;
-            document.getElementById('txt-global-metrics').innerText = t.global;
-            document.getElementById('txt-population').innerText = t.pop;
-            document.getElementById('txt-rate').innerText = t.rate;
-            
-            // Treasury
-            document.getElementById('txt-treasury').innerText = t.treasury;
-            document.getElementById('txt-treasury-note').innerText = t.note;
-            
-            // Army & Monitoring
-            document.getElementById('txt-monitoring').innerText = t.monitoring;
-            document.getElementById('txt-army-registry').innerText = t.armyReg;
-            document.getElementById('txt-army-table-head').innerHTML = t.armyHead;
-            
-            // Other Modules
-            document.getElementById('txt-tax-directives').innerText = t.taxDir;
-            document.getElementById('txt-vacancies').innerText = t.vac;
-            document.getElementById('txt-objects').innerText = t.obj;
-            
-            // Footer
-            document.getElementById('txt-subsystems').innerText = t.sub;
-            document.getElementById('txt-footer-desc').innerText = t.footDesc;
-            document.getElementById('btn-staff-nav').innerText = t.btnStaff;
-            document.getElementById('btn-laws-nav').innerText = t.btnLaws;
-            document.getElementById('btn-sport-nav').innerText = t.btnSport;
-            
-            // Staff Page
-            document.getElementById('txt-staff-title').innerText = t.staffTitle;
-            document.getElementById('txt-pos-pres').innerText = t.posPres;
-            document.getElementById('txt-desc-pres').innerText = t.descPres;
-            document.getElementById('txt-pos-t4rok').innerText = t.posT4rok;
-            document.getElementById('txt-desc-t4rok').innerText = t.descT4rok;
-            document.getElementById('txt-pos-rex').innerText = t.posRex;
-            document.getElementById('txt-desc-rex').innerText = t.descRex;
-            
-            // Laws Page
-            document.getElementById('txt-laws-title').innerText = t.lawsTitle;
-            document.getElementById('txt-law-1-title').innerText = t.law1Title;
-            document.getElementById('txt-law-1-desc').innerText = t.law1Desc;
-            document.getElementById('txt-law-2-title').innerText = t.law2Title;
-            document.getElementById('txt-law-2-desc').innerText = t.law2Desc;
-            document.getElementById('txt-law-5-title').innerText = t.law5Title;
-            document.getElementById('txt-law-5-desc').innerText = t.law5Desc;
-            
-            // Sport Page
-            document.getElementById('txt-sport-title').innerText = t.sportTitle;
-            
-            // Back Buttons
-            document.querySelectorAll('.btn-back').forEach(btn => {
-                btn.innerText = t.btnBack;
-            });
-            
-            console.log("Language switched to: " + lang);
-        }
+        function translateUI(lang) {
+            const gearElement = document.getElementById('ui-gear-btn');
+            gearElement.innerText = "⚙️";
 
-        /**
-         * UI CONTROLLER: AUTHORIZATION
-         */
-        function activateInterface() {
-            const gate = document.getElementById('gateway-container');
-            const root = document.getElementById('application-root');
-            
-            gate.style.opacity = '0';
-            gate.style.visibility = 'hidden';
-            
-            setTimeout(function() {
-                gate.style.display = 'none';
-                root.style.display = 'block';
-                
-                setTimeout(function() {
-                    root.style.opacity = '1';
-                }, 100);
-                
-                state_data.is_active = true;
-                initDynamicSystems();
-                
-            }, 800);
-            
-            console.log("System Authorized. Welcome, User.");
-        }
-
-        /**
-         * UI CONTROLLER: NAVIGATION
-         */
-        function switchPage(page_name) {
-            const all_pages = [
-                'application-root', 
-                'sub-page-laws', 
-                'sub-page-sport', 
-                'sub-page-staff'
-            ];
-            
-            all_pages.forEach(p_id => {
-                const el = document.getElementById(p_id);
-                if (el) {
-                    el.style.display = 'none';
-                    el.style.opacity = '0';
-                }
-            });
-            
-            let target_id = '';
-            if (page_name === 'main') {
-                target_id = 'application-root';
-            } else {
-                target_id = 'sub-page-' + page_name;
-            }
-            
-            const target_el = document.getElementById(target_id);
-            if (target_el) {
-                target_el.style.display = 'block';
-                setTimeout(function() {
-                    target_el.style.opacity = '1';
-                }, 50);
-            }
-            
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-            
-            console.log("Switched to page: " + page_name);
-        }
-
-        /**
-         * BACKGROUND SYSTEMS: COUNTERS & LOGS
-         */
-        function initDynamicSystems() {
-            // Population Counter
-            setInterval(function() {
-                if (state_data.is_active) {
-                    state_data.pop += Math.floor(Math.random() * 5);
-                    const p_el = document.getElementById('live-pop-val');
-                    if (p_el) p_el.innerText = state_data.pop.toLocaleString();
-                }
-            }, 3000);
-
-            // Currency Rate Counter
-            setInterval(function() {
-                if (state_data.is_active) {
-                    const change = (Math.random() * 0.14) - 0.07;
-                    state_data.rate += change;
-                    const r_el = document.getElementById('live-rate-val');
-                    if (r_el) r_el.innerText = state_data.rate.toFixed(2) + " ₴";
-                }
-            }, 4000);
-            
-            // Uptime Counter
-            setInterval(function() {
-                if (state_data.is_active) {
-                    state_data.uptime += 1;
-                    const u_el = document.getElementById('uptime-val');
-                    if (u_el) u_el.innerText = state_data.uptime + "h";
-                }
-            }, 3600000);
-
-            initTerminalLogs();
-        }
-
-        /**
-         * TERMINAL LOG ENGINE
-         */
-        function initTerminalLogs() {
-            const log_box = document.getElementById('terminal-output');
-            const event_pool = [
-                "Shield frequency synchronized",
-                "Kroshnya Node: Sector Scan OK",
-                "Tram 7: Energy efficiency 99%",
-                "Blocked intrusion from external cloud",
-                "New citizen: Neural ID verified",
-                "Vibe check in progress: COMPLETE",
-                "T4rok security protocols updated",
-                "Hydro-energy flow: STABLE",
-                "Space Port: All shuttles docked",
-                "Sinniy Market: Local sync active",
-                "Atmospheric pressure optimal",
-                "Kernel status: REDUNDANT OK",
-                "Mihailivska VR: Rendering vibes...",
-                "Quantum firewall: No leaks detected",
-                "Satellite Korolyov-1: Online",
-                "Syncing state treasury data..."
-            ];
-
-            setInterval(function() {
-                if (log_box && state_data.is_active) {
-                    const msg = event_pool[Math.floor(Math.random() * event_pool.length)];
-                    const time = new Date().toLocaleTimeString();
-                    const line = document.createElement('div');
-                    line.innerHTML = `> [${time}] ${msg}`;
-                    log_box.appendChild(line);
-                    
-                    if (log_box.childNodes.length > 50) {
-                        log_box.removeChild(log_box.firstChild);
+            // SPECIAL CASE: PIG (RUSSIAN)
+            if (lang === 'pig') {
+                const walkerObj = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+                let currentNode;
+                while (currentNode = walkerObj.nextNode()) {
+                    const textValue = currentNode.nodeValue.trim();
+                    if (textValue !== "" && !/^[\d\s,.\-%₴$€]+$/.test(textValue)) {
+                        currentNode.nodeValue = "хрю-хрю";
                     }
-                    
-                    log_box.scrollTop = log_box.scrollHeight;
                 }
-            }, 4000);
+                gearElement.innerText = "🐷";
+                return;
+            }
+
+            const data = translations[lang] || translations['ua'];
+
+            // Header Elements
+            document.getElementById('txt-title').innerHTML = data.title.replace(" ", "<br>");
+            document.getElementById('txt-subtitle').innerText = data.sub;
+            document.getElementById('btn-auth').innerText = data.auth;
+
+            // Stats Labels
+            document.getElementById('lbl-pop').innerText = data.pop;
+            document.getElementById('lbl-rate').innerText = data.rate;
+            document.getElementById('lbl-vibe').innerText = data.vibe;
+            document.getElementById('lbl-cyber').innerText = data.cyber;
+            document.getElementById('txt-active').innerText = data.active;
+            document.getElementById('lbl-budget').innerText = data.budget;
+
+            // Currency Symbols
+            document.getElementById('cur-sym').innerText = data.currency;
+            document.getElementById('bud-sym').innerText = data.currency;
+            const currencyTags = document.querySelectorAll('.v-cur');
+            for (let i = 0; i < currencyTags.length; i++) {
+                currencyTags[i].innerText = data.currency;
+            }
+
+            // Vacancies (Manual Mapping)
+            document.getElementById('lbl-vac').innerText = data.vac;
+            document.getElementById('v1').innerText = data.v1;
+            document.getElementById('v2').innerText = data.v2;
+            document.getElementById('v3').innerText = data.v3;
+            document.getElementById('v4').innerText = data.v4;
+            document.getElementById('v5').innerText = data.v5;
+            document.getElementById('v6').innerText = data.v6;
+            document.getElementById('v7').innerText = data.v7;
+            document.getElementById('v8').innerText = data.v8;
+            document.getElementById('v9').innerText = data.v9;
+            document.getElementById('v10').innerText = data.v10;
+            document.getElementById('v11').innerText = data.v11;
+            document.getElementById('v12').innerText = data.v12;
+
+            // Academies
+            document.getElementById('lbl-edu').innerText = data.edu;
+            document.getElementById('e1').innerText = data.e1;
+            document.getElementById('e2').innerText = data.e2;
+            document.getElementById('e3').innerText = data.e3;
+            document.getElementById('e4').innerText = data.e4;
+            document.getElementById('e5').innerText = data.e5;
+            document.getElementById('e6').innerText = data.e6;
+            document.getElementById('e7').innerText = data.e7;
+            document.getElementById('e8').innerText = data.e8;
+            document.getElementById('e9').innerText = data.e9;
+            document.getElementById('e10').innerText = data.e10;
+            document.getElementById('e11').innerText = data.e11;
+            document.getElementById('e12').innerText = data.e12;
+
+            // Navigation
+            document.getElementById('nav-lead').innerText = data.lead;
+            document.getElementById('nav-laws').innerText = data.laws;
+            document.getElementById('nav-sport').innerText = data.sport;
+
+            // Settings Modal
+            document.getElementById('st-h').innerText = data.st_h;
+            document.getElementById('st-scale').innerText = data.st_scale;
+            document.getElementById('st-theme').innerText = data.st_theme;
+            document.getElementById('st-lang').innerText = data.st_lang;
+            document.getElementById('st-close').innerText = data.close;
+            document.getElementById('th-light').innerText = data.th_light;
+            document.getElementById('th-cyber').innerText = data.th_cyber;
+
+            // Leadership
+            document.getElementById('ld-h').innerText = data.lead;
+            document.getElementById('ln1').innerText = data.ln1;
+            document.getElementById('lr1').innerText = data.lr1;
+            document.getElementById('ln2').innerText = data.ln2;
+            document.getElementById('lr2').innerText = data.lr2;
+            document.getElementById('ln3').innerText = data.ln3;
+            document.getElementById('lr3').innerText = data.lr3;
+            document.getElementById('tk1').innerText = data.tk;
+            document.getElementById('tk2').innerText = data.tk;
+            document.getElementById('tg2').innerText = data.tg;
+            document.getElementById('tk3').innerText = data.tk;
+            document.getElementById('ld-close').innerText = data.close;
+
+            // Laws
+            document.getElementById('laws-h').innerText = data.laws;
+            document.getElementById('lt-a1').innerText = data.art + " 1:";
+            document.getElementById('lt1').innerText = data.lt1;
+            document.getElementById('lt-a2').innerText = data.art + " 2:";
+            document.getElementById('lt2').innerText = data.lt2;
+            document.getElementById('lt-a3').innerText = data.art + " 3:";
+            document.getElementById('lt3').innerText = data.lt3;
+            document.getElementById('lt-a4').innerText = data.art + " 4:";
+            document.getElementById('lt4').innerText = data.lt4;
+            document.getElementById('lt-a5').innerText = data.art + " 5:";
+            document.getElementById('lt5').innerText = data.lt5;
+            document.getElementById('lt-a6').innerText = data.art + " 6:";
+            document.getElementById('lt6').innerText = data.lt6;
+            document.getElementById('lt-a7').innerText = data.art + " 7:";
+            document.getElementById('lt7').innerText = data.lt7;
+            document.getElementById('laws-close').innerText = data.close;
+
+            // Sport
+            document.getElementById('sport-h').innerText = data.sport;
+            document.getElementById('sp-e1').innerText = data.event + " 1:";
+            document.getElementById('sd1').innerText = data.sd1;
+            document.getElementById('sp-e2').innerText = data.event + " 2:";
+            document.getElementById('sd2').innerText = data.sd2;
+            document.getElementById('sp-e3').innerText = data.event + " 3:";
+            document.getElementById('sd3').innerText = data.sd3;
+            document.getElementById('sport-close').innerText = data.close;
+
+            // Options Recovery
+            document.getElementById('opt-ua').innerText = data.o_ua;
+            document.getElementById('opt-en').innerText = data.o_en;
+            document.getElementById('opt-de').innerText = data.o_de;
+            document.getElementById('opt-es').innerText = data.o_es;
+            document.getElementById('opt-pig').innerText = data.o_pig;
         }
 
-        /* ========================================================================================
-           DEVELOPER NOTE: USZ PORTAL CORE V24.0.3
-           This code is intentionally expanded for maximum readability and structure.
-           Total line count objective: > 1122 lines.
-           Status: VALIDATED.
-           ========================================================================================
-        */
-        console.log("UNITED STATES OF ZHYTOMYR INTERFACE v24.0.3 BOOTED SUCCESSFULLY.");
-        console.log("VERBOSITY LEVEL: MAXIMUM.");
+        /**
+         * INITIALIZATION & UI CONTROLS
+         */
+        function igniteSystem() {
+            const splash = document.getElementById('splash-screen');
+            const app = document.getElementById('main-app');
+            splash.style.opacity = '0';
+            setTimeout(function() {
+                splash.style.display = 'none';
+                app.style.display = 'block';
+                setTimeout(function() {
+                    app.style.opacity = '1';
+                }, 50);
+            }, 600);
+        }
+
+        function rescale(value) {
+            document.documentElement.style.setProperty('--usz-font-size', value + 'px');
+        }
+
+        function retheme(type) {
+            if (type === 'cyber') {
+                document.body.classList.add('theme-cyber');
+            } else {
+                document.body.classList.remove('theme-cyber');
+            }
+        }
+
+        function modalIn(id) {
+            document.getElementById(id).style.display = 'flex';
+        }
+
+        function modalOut(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        window.onload = function() {
+            document.body.classList.add('theme-cyber');
+        };
     </script>
 </body>
 </html>
