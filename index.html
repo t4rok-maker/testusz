@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Державний Портал СШЖ v38.1 - FULL RECOVERY</title>
+    <title>Державний Портал СШЖ v38.4 - FULL ADAPTIVE & MULTILANG</title>
     
     <style>
         /* ========================================
@@ -412,7 +412,31 @@
         }
 
         /* ========================================
-           CSS BLOCK 09: LINKS & BUTTONS
+           CSS BLOCK 09: ADAPTIVE MEDIA QUERIES
+           ========================================
+        */
+        @media screen and (max-width: 1024px) {
+            .span-3 { grid-column: span 6; }
+        }
+
+        @media screen and (max-width: 768px) {
+            .portal-header h1 { font-size: 45px; }
+            .usz-logo-big { font-size: 50px; letter-spacing: 10px; }
+            .span-6, .span-3 { grid-column: span 12; }
+            .fixed-dock { 
+                width: 90%; 
+                gap: 10px; 
+                padding-left: 10px; 
+                padding-right: 10px;
+                bottom: 15px;
+            }
+            .dock-item { font-size: 11px; padding-left: 10px; padding-right: 10px; }
+            .big-data { font-size: 26px; }
+            #val-budget-c { font-size: 35px !important; }
+        }
+
+        /* ========================================
+           CSS BLOCK 10: LINKS & BUTTONS
            ========================================
         */
         .link-btn {
@@ -477,7 +501,7 @@
             <header class="portal-header">
                 <h1 id="txt-title">UNITED STATES<br>OF ZHYTOMYR</h1>
                 <p id="txt-subtitle" style="font-weight: 900; letter-spacing: 8px; color: var(--usz-text-dim);">
-                    ДЕРЖАВНА ІНФОРМАЦІЙНА СИСТЕМА v38.0
+                    ДЕРЖАВНА ІНФОРМАЦІЙНА СИСТЕМА v38.4
                 </p>
             </header>
 
@@ -696,12 +720,12 @@
     <script>
         /**
          * GLOBAL TRANSLATION REPOSITORY
-         * Contains full mapping for 5 languages: UA, EN, DE, ES, PIG.
+         * Includes full mapping for 5 languages.
          */
         const translations = {
             ua: {
                 title: "UNITED STATES OF ZHYTOMYR",
-                sub: "ДЕРЖАВНА ІНФОРМАЦІЙНА СИСТЕМА v38.0",
+                sub: "ДЕРЖАВНА ІНФОРМАЦІЙНА СИСТЕМА v38.4",
                 pop: "Населення СШЖ",
                 rate: "Курс Житомирської Грн.",
                 budget: "Річний Бюджет Країни",
@@ -774,7 +798,7 @@
             },
             en: {
                 title: "UNITED STATES OF ZHYTOMYR",
-                sub: "STATE INFORMATION SYSTEM v38.0",
+                sub: "STATE INFORMATION SYSTEM v38.4",
                 pop: "USZ Population",
                 rate: "Zhytomyr Rate",
                 budget: "Annual State Budget",
@@ -847,14 +871,14 @@
             },
             de: {
                 title: "VEREINIGTE STAATEN VON ZHYTOMYR",
-                sub: "STAATSINFORMATIONSSYSTEM v38.0",
+                sub: "STAATSINFORMATIONSSYSTEM v38.4",
                 pop: "Bevölkerung",
                 rate: "Kurs",
                 budget: "Jahresbudget",
                 vibe: "Vibe-Index",
                 cyber: "Cyber-Schutz",
                 active: "AKTIV",
-                vac: "💼 Ministerium Stellen",
+                vac: "💼 Stellenangebote",
                 edu: "🏫 Staatsakademien",
                 lead: "Führung",
                 laws: "Gesetze",
@@ -878,10 +902,10 @@
                 art: "Artikel",
                 event: "Ereignis",
                 currency: "€",
-                v1: "F1 Pilot",
+                v1: "F1 Pilot (GetaCard Racing)",
                 v2: "Programmierminister",
                 v3: "Geoguessr Offizier",
-                v4: "Cyber-Ingenieur",
+                v4: "Senior Cyber-Ingenieur",
                 v5: "Verkehrsanalytiker",
                 v6: "Spurendetektiv",
                 v7: "Drohnenoperator",
@@ -920,7 +944,7 @@
             },
             es: {
                 title: "ESTADOS UNIDOS DE ZHYTOMYR",
-                sub: "SISTEMA DE INFORMACIÓN v38.0",
+                sub: "SISTEMA DE INFORMACIÓN v38.4",
                 pop: "Población",
                 rate: "Tasa",
                 budget: "Presupuesto",
@@ -951,7 +975,7 @@
                 art: "Artículo",
                 event: "Evento",
                 currency: "€",
-                v1: "Piloto F1",
+                v1: "Piloto F1 (GetaCard Racing)",
                 v2: "Ministro de Programación",
                 v3: "Oficial Geoguessr",
                 v4: "Ingeniero Ciber",
@@ -995,13 +1019,12 @@
 
         /**
          * FUNCTION: translateUI
-         * Verbose implementation of language switching logic.
+         * Full implementation for multi-language support.
          */
         function translateUI(lang) {
             const gearElement = document.getElementById('ui-gear-btn');
             gearElement.innerText = "⚙️";
 
-            // SPECIAL CASE: PIG (RUSSIAN)
             if (lang === 'pig') {
                 const walkerObj = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
                 let currentNode;
@@ -1017,12 +1040,10 @@
 
             const data = translations[lang] || translations['ua'];
 
-            // Header Elements
             document.getElementById('txt-title').innerHTML = data.title.replace(" ", "<br>");
             document.getElementById('txt-subtitle').innerText = data.sub;
             document.getElementById('btn-auth').innerText = data.auth;
 
-            // Stats Labels
             document.getElementById('lbl-pop').innerText = data.pop;
             document.getElementById('lbl-rate').innerText = data.rate;
             document.getElementById('lbl-vibe').innerText = data.vibe;
@@ -1030,7 +1051,6 @@
             document.getElementById('txt-active').innerText = data.active;
             document.getElementById('lbl-budget').innerText = data.budget;
 
-            // Currency Symbols
             document.getElementById('cur-sym').innerText = data.currency;
             document.getElementById('bud-sym').innerText = data.currency;
             const currencyTags = document.querySelectorAll('.v-cur');
@@ -1038,7 +1058,6 @@
                 currencyTags[i].innerText = data.currency;
             }
 
-            // Vacancies (Manual Mapping)
             document.getElementById('lbl-vac').innerText = data.vac;
             document.getElementById('v1').innerText = data.v1;
             document.getElementById('v2').innerText = data.v2;
@@ -1053,7 +1072,6 @@
             document.getElementById('v11').innerText = data.v11;
             document.getElementById('v12').innerText = data.v12;
 
-            // Academies
             document.getElementById('lbl-edu').innerText = data.edu;
             document.getElementById('e1').innerText = data.e1;
             document.getElementById('e2').innerText = data.e2;
@@ -1068,12 +1086,10 @@
             document.getElementById('e11').innerText = data.e11;
             document.getElementById('e12').innerText = data.e12;
 
-            // Navigation
             document.getElementById('nav-lead').innerText = data.lead;
             document.getElementById('nav-laws').innerText = data.laws;
             document.getElementById('nav-sport').innerText = data.sport;
 
-            // Settings Modal
             document.getElementById('st-h').innerText = data.st_h;
             document.getElementById('st-scale').innerText = data.st_scale;
             document.getElementById('st-theme').innerText = data.st_theme;
@@ -1082,7 +1098,6 @@
             document.getElementById('th-light').innerText = data.th_light;
             document.getElementById('th-cyber').innerText = data.th_cyber;
 
-            // Leadership
             document.getElementById('ld-h').innerText = data.lead;
             document.getElementById('ln1').innerText = data.ln1;
             document.getElementById('lr1').innerText = data.lr1;
@@ -1096,7 +1111,6 @@
             document.getElementById('tk3').innerText = data.tk;
             document.getElementById('ld-close').innerText = data.close;
 
-            // Laws
             document.getElementById('laws-h').innerText = data.laws;
             document.getElementById('lt-a1').innerText = data.art + " 1:";
             document.getElementById('lt1').innerText = data.lt1;
@@ -1114,7 +1128,6 @@
             document.getElementById('lt7').innerText = data.lt7;
             document.getElementById('laws-close').innerText = data.close;
 
-            // Sport
             document.getElementById('sport-h').innerText = data.sport;
             document.getElementById('sp-e1').innerText = data.event + " 1:";
             document.getElementById('sd1').innerText = data.sd1;
@@ -1124,7 +1137,6 @@
             document.getElementById('sd3').innerText = data.sd3;
             document.getElementById('sport-close').innerText = data.close;
 
-            // Options Recovery
             document.getElementById('opt-ua').innerText = data.o_ua;
             document.getElementById('opt-en').innerText = data.o_en;
             document.getElementById('opt-de').innerText = data.o_de;
